@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuex Sample</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- CSS import -->
+    <link rel="stylesheet" href="../css/reset.css">
+
+    <style>
+        .component-parent {
+            width: 50%;
+            background-color: lightblue;
+            padding: 5%;
+        }
+
+        .component-child {
+            width: 80%;
+            background-color: lightgray;
+            padding: 5% 5% 10% 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <xmp>
+
+        예제 "34-ex-01-counter.html" 를 Vuex를 사용하는 방법으로 바꾸어 본다.
+
+        이 앱의 특징은 다음과 같습니다.
+          + 버튼을 클릭하면 카운터가 올라가고
+          - 버튼을 클릭하면 카운터가 감소됩니다.
+
+          child-componet 템플릿 태그는 아래와 같이 설정하시오.
+          <div class="component-child">
+              Child counter : {{ num }} <br>
+              <button name="child" v-on:click="addCounter">+</button>
+              <button name="child" v-on:click="subCounter">-</button>
+          </div>
+        
+        axios를 이용하여 외부 함수 호출 기능 추가하기
+        외부 함수 호출 기능을 추가하기 위해서는 서버 기능이 필요합니다.
+        
+
+        1. 필요한 프로그램 설치
+            node.js 설치
+            node 설치 여부 확인
+            node -V
+            
+            git 설치
+            git bash 셀 설치 여부 확인
+        
+        2. bash셀 터미널 열기
+            bash 셀 설정
+        
+        3. bash셀 터미널에서 폴더 이동
+        $ cd vue09서버통신
+        
+        4. 파일 목록 확인. server.js 있는지 확인
+        $ ls
+        ht08-01.form태그.html item.xml item.html item.json item.txt server.js
+        
+        5. server.js 가 보이면 서버 실행
+        $ node server.js
+        start server - anonymous function
+
+        6. 브라우저로 서버 실행 여부 확인
+        http://localhost:5050/counter   ==> 1 씩 증가 
+        http://localhost:5050/counter?step=10  ==> 10 씩 증가 
+
+
+    </xmp>
+    <hr>
+
+    <div id="app" class="component-parent">
+        Parent counter : {{ counter }} <br>
+        <button name="parent" v-on:click="addCounter(this.event, +10)">+</button>
+        <button name="parent" v-on:click="subCounter(this.event, -10)">-</button>
+        <p></p>
+
+        <!-- Child 컴포넌트를 등록하고 counter 데이터 속성을 props로 전달한다. -->
+        <component-child
+            v-on:add-counter="addCounter"
+            v-on:sub-counter="subCounter">
+        </component-child>
+    </div>
+</body>
+
+</html>

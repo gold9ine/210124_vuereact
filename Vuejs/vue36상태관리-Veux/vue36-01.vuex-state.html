@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuex Sample</title>
+
+    <!-- CSS import -->
+    <link rel="stylesheet" href="../css/reset.css">
+
+</head>
+
+<body>
+    <xmp>
+
+      1 상태 관리란?
+        상태 관리란 한 곳에서 여러 컴포넌트 간에 공유되는 데이터를 관리한다는 것을 의미합니다.
+        데이터 공유 
+            컴포넌트 <--> 컴포넌트: props, 이벤트
+            인스턴스 <--> 컴포넌트: props, 이벤트
+            
+
+      2 상태 관리(State Management)가 왜 필요한가?
+       컴포넌트로 화면을 구성하는 경우 컴포넌트간의 데이터 공유가 필요합니다.
+       컴포넌트가 많은 경우 props나 이벤트, 이벤트버스를 사용하여 상태를 관리하는 것은 효율적이지 않습니다.
+       컴포넌트가 많은 경우 효율적인 컴포넌트 간의 통신이나 데이터 관리 방밥이 필요합니다.
+       그것이 Vuex 입니다.
+       
+      3. Vuex란?
+       Vue.js의 상태 관리 라이브러리입니다.
+       
+      4. 왜 Vuex 를 사용해야 하는가? 
+      ==>
+       일반적으로 앱의 규모가 커지면서 생기는 문제점들은 다음과 같습니다.
+       . 너무 많은 props, event emit 사용
+       . Event Bus사용으로 인해 컴포넌트 간 데이터 흐름을 파악하기 어려운 경우
+      이러한 문제점이 발생 하는 경우 Vuex를 사용하면 쉽게 해결 할 수 있습니다.
+      복잡한 state down(props) / state up(event) 처리를 없애기 위해서 사용 된다. 
+
+      5. Vuex 구성 5 요소
+       . view(==component) : 컴포넌트 나 인스턴스가 된다.
+       . actions : 사용자의 입력에 따라 반응할 methods.
+                   비동기적 로직을 수행
+                   this.$store.dispatch("action명", payload) 을 사용하여 호출
+       . mutations: 동기적 로직을 수행
+                   this.$store.commit("action명", payload) 을 사용하여 호출
+       . state : 컴포넌트 간에 공유할 data
+       . getter:
+
+    -------------------------------------------------------
+    
+      작업1. vue 인스턴스 기능 완성. data 프로퍼티 추가
+          {{header}} 에는 "Vuex 사용 앱" 가 나오게
+          {{welcome}} 에는 "HELLO WORLD" 가 나오게
+          {{counter}} 에는 0 이 나오게
+  
+      작업2. vue 인스턴스 기능 완성. 버튼 추가
+          <button v-on:click="increment">더해줘</button>
+          <button v-on:click="decrement">빼줘</button>
+
+      작업3. vuex store 만들기.
+        vue 인스턴스 data 의 welcome과 counter를 vuex store 로 옮기기.
+
+      작업4. store를 사용하도록 인스턴스나 컴포넌트 코드 수정
+    </xmp>
+    <hr>
+    <div id="app">
+        <h1>{{header}}</h1>
+        <h2>{{welcome}}</h2>
+        <h3>{{counter}}</h3>
+        <button v-on:click="increment">더해줘</button>
+        <button v-on:click="decrement">빼줘</button>
+    </div>
+</body>
+
+</html>

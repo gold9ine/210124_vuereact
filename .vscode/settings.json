@@ -1,0 +1,87 @@
+{
+    "editor.minimap.enabled": false,
+    "editor.tabSize": 4,
+    "editor.fontFamily": "나눔고딕코딩",
+    "editor.fontLigatures": true,
+    /* 저장 시 해당 파일 전체 포맷 여부 */
+    "editor.formatOnSave": false,
+    /* 해당값 true로 설정 시 ; 을 입력하면 해당 라인이 파일에 설정된 포맷에 따라 가게됩니다.  */
+    "editor.formatOnType": false,
+    /* 붙여넣기 시 해당 텍스트 포맷 여부. */
+    "editor.formatOnPaste": false,
+    /* 기본 Formatter 설정 */
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.snippetSuggestions": "top",
+    "editor.fontSize": 20,
+    "editor.renderWhitespace": "all",
+    // files
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.DS_Store": true,
+        "*/node_modules": true,
+        "**/.idea": true,
+        "**/.vscode": false,
+        "**/yarn.lock": true,
+        "**/tmp": true,
+        "node_modules": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/node_modules/**": true,
+        "**/tmp": true,
+        "**/build": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/tmp": true,
+        "**/coverage": true,
+        "**/build": true,
+        "**/Pods": true,
+        "**/*.xcodeproj": true,
+        "**/*.xcworkspace": true,
+        "**/.meteor": true
+    },
+    "html.suggest.html5": true,
+
+    // git
+    "git.autofetch": false,
+    "git.enableSmartCommit": true,
+    "[html]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[json]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+
+    // prettier
+    "prettier.tabWidth": 4,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "html.format.preserveNewLines": false,
+    "html.format.unformatted": "xmp,pre,code,textarea",
+    "html.format.contentUnformatted": "xmp,pre,code,textarea",
+    "html.format.extraLiners": "",
+    "html.format.wrapAttributes": "force",
+    "html.format.wrapLineLength": 0,
+    "html.format.endWithNewline": true,
+    "html.format.indentInnerHtml": true
+}
