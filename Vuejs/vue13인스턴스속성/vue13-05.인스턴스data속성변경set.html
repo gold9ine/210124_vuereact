@@ -23,7 +23,7 @@
 <body>
     <xmp>
 
-        data 속성의 값을 변경하려면 재할당으로 처리해야 한다. 
+        data 속성의 값을 변경하려면 재할당으로 처리해야 한다.
 
         data 속성 주의 사항
             인스턴스나 컴포넌트의 data 속성의 값을 직접 바꾸면 화면에 rendering 이 되지 않는 문제 발생
@@ -31,11 +31,11 @@
 
         어떻게 data 속성의 값을 바꾸어야 하나?
             data 속성의 값을 변경하려면 반드시 재할당으로 처리해야 한다.
-        
+
         자바스크립트 타입
             # value 타입에는 string, number, boolen, ...
             # reference 타입에는 Object, Array, Function, ...
-        
+
         new Vue({
             el: "#",
             data: {
@@ -74,20 +74,20 @@
                     { a:31, b: "32"} ,
                 ]
             }
-            
+
             1. this.$set(object, key, value) 방식.
                 this.$set() 은 Vue 인스턴스 의 인스턴스 메서드
                 this.$set(this.$data.msg4, 0, 300);
 
-            2. Vue.set(object, key, value) 방식 
+            2. Vue.set(object, key, value) 방식
                 Vue.set() 은 Vue prototype 의 static 메서드
                 Vue.set(this.$data.msg4, 0, 100);
 
-            3. spread 연산자 방식 ==> 배열을 새로 만든 뒤 할당. ES6 에서만 가능.
-                var arr_copy=[...this.$data.msg4, 70];
-
-            4. splice()함수를 사용하여 변경한다.
+            3. splice()함수를 사용하여 변경한다.
                 this.$data.msg4.splice(0,2,500);
+
+            4. spread 연산자 방식 ==> 배열을 새로 만든 뒤 할당. ES6 에서만 가능.
+                var arr_copy=[...this.$data.msg4, 70];
 
         실행 순서와 결과 예시
             (1) [100, 2, 3, 4, 5]       <== 방법1을 적용
@@ -110,3 +110,55 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"> /* JSX를 자바스크립트로 변환 */</script>
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vuex@3.3.0/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vue-router@3.1.6/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios 플러그인 임포트 */</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            arr: [1,2,3,4,5],
+        },
+        //template: ``,
+        methods: {
+            change1: function(event){
+                console.log(event.target);
+
+                this.$data.arr[0] = 100;
+                console.log(this.$data.arr);
+
+                //this.$data.arr[0] = 100;
+                this.$set( this.$data.arr, 0, 100);
+            },
+            change2: function(event){
+                console.log(event.target);
+                //this.$data.arr[1] = 300;
+                Vue.set( this.$data.arr, 1, 300);
+            },
+            change3: function(event){
+                console.log(event.target);
+                // [3,4,5]
+                // splice() 메서드 안에는 재할당 기능이 내장되어 있다.
+                this.$data.arr.splice(0,2); // 0부터 2번 전까지 지우고 새로운 배열을 만든다.
+            },
+            change4: function(event){
+                console.log(event.target);
+
+                console.log(this.$data.arr); // [3,4,5]
+
+                // spread 연산자
+                //var arr = [500, 3,4,5, 70 ]
+                // ...this.$data.arr = 3, 4, 5
+                var arr_copy = [500, ...this.$data.arr, 70 ];
+
+                //this.$data.arr = arr_copy;
+
+                this.$set( this.$data , "arr" , arr_copy)
+            },
+        }
+    });
+</script>

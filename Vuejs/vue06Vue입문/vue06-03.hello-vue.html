@@ -23,7 +23,7 @@
         . el , data, methods 에 프로퍼티 설정
             el: 태그 찾기
             data : 변수(상태) 설정
-            methods: 이벤트 핸들러 설정. 
+            methods: 이벤트 핸들러 설정.
         . HTML 파일에 DOM 컨테이너 설치
 
         [참조]page 34,37,38
@@ -32,8 +32,30 @@
 
     <div id="app">
         <p>{{ message }}</p>
-        <button v-on:click="clickBtn">click me</button>
+        <button v-on:click="clickBtn">vue click me</button>
+
+        <hr>
+
+        <button onclick="clickBtnjs">javascript click me</button>
     </div>
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+
+    new Vue({
+        el: "#app", /* 찾기 */
+        data: {
+            message: "Hello, Vue.js",
+        },
+        methods: {
+            clickBtn: function(event){
+                this.$data.message = "Hello~~~~~~";
+                alert("hi");
+            }
+        }
+    });
+</script>

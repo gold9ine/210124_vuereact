@@ -1,9 +1,9 @@
 {
-	// Place your VueReact workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
-	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
-	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
-	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Place your VueReact workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
 	// Placeholders with the same ids are connected.
 	// Example:
 	// "Print to console": {
@@ -184,5 +184,27 @@
             "</script>"
         ],
         "description": "Vue plugin import"
+    },
+    "Axios": {
+        "prefix": "axios",
+        "body": [
+            "// import axios from \"axios\";",
+            "",
+            "axios({",
+            "    url: \"item\",  // 호출되는 서버 주소.",
+            "    method: \"get\",       // request method: get, post, delete, put",
+            "    params: { },  // 서버로 보내는 데이터. 예시) { data1:\"test1\", data2:\"test2\" } ",
+            "    timeout: 30000,    // 최대 대기 시간: 30초. 30초 이상이 되면 fail 부분이 실행됨.",
+            "    responseType: \"json\",  // response로 넘어오는 데이터 형태: text, html, xml, json, jsonp, script",
+            "})",
+            ".then( (res) => {",
+            "    console.log(res.data);",
+            "    this.message1 = res.data;",
+            "})",
+            ".catch((error) => {",
+            "    console.log(error);",
+            "});"
+        ],
+        "description": "React script"
     }
 }

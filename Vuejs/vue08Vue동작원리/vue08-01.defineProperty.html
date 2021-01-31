@@ -41,15 +41,15 @@
     <pre>
         Vue 를 이용하여 #app1 의 {{msg}} 에 "Hello" 를 출력한다.
         Vue 의 인스턴스 명은 vm1 으로 만드시오. var vm1 = new Vue();
-        예제) vue06-03.hello-vue.html 을 참조. 
+        예제) vue06-03.hello-vue.html 을 참조.
     </pre>
-    <div id="app">
+    <div id="app1">
         <h2>{{msg}}</h2>
     </div>
 
     <hr color="red">
     <pre>
-        뷰 인스턴스의 
+        뷰 인스턴스의
             data: {
                 msg: "Hello",
             }
@@ -57,7 +57,7 @@
 
         #app2 에 Object.defineProperty() 메서드의 get, set 설정하고 "123" 을 출력한다.
         1. document.getElementById() 를 사용하여 #app2 엘리먼트를 찾는다.
-        2. 엘리먼트의 innerHTML 또는 innerText 프러퍼티에 설정 
+        2. 엘리먼트의 innerHTML 또는 innerText 프러퍼티에 설정
 
     </pre>
     <h2 id="app2">
@@ -66,3 +66,43 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    // Vue를 이용하여 #app 의 {{msg}} 부분에 "Hello" 를 출력하라. 
+    const vm1 = new Vue({
+        /* edtmc^2w */
+        el: "#app1",
+        data: {
+            msg: "Hello",
+        },
+    });
+
+    /*
+    data: {
+        msg: "Hello",
+    }
+    의 기능을 직접 구현하여 본다
+
+    #app2 에 Object.defineProperty() 메서드의 get, set 설정하고 "123" 을 출력한다.
+    1. document.getElementById() 를 사용하여 #app2 엘리먼트를 찾는다.
+    2. 엘리먼트의 innerHTML 또는 innerText 프러퍼티에 설정
+    */
+   var app2 = document.getElementById("app2");
+   var data = { };
+   Object.defineProperty( data, "msg",  {
+        get: function(){
+            return app2.innerHTML; /* 이자리에 있는 정보를 가져오다 */
+        },
+        set: function(value){
+            app2.innerHTML = value;
+        },
+   });
+
+   debugger;
+   data.msg = "aaa"; // set 기능이 사용됨. 화면이 바뀐다.
+   console.log( data.msg); // get 기능이 사용됨.
+   data["msg"] = "abc"; // set 기능이 사용됨. 화면이 바뀐다.
+
+</script>

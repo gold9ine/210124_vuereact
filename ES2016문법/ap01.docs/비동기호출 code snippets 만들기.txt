@@ -11,7 +11,7 @@ https://www.youtube.com/watch?v=t4ESp_po6Wc
             "// import axios from \"axios\";",
             "",
             "axios({",
-            "    url: \"item\",  // 호출되는 서버 주소.",
+            "    url: \"\",  // 호출되는 서버 주소.",
             "    method: \"get\",       // request method: get, post, delete, put",
             "    params: { },  // 서버로 보내는 데이터. 예시) { data1:\"test1\", data2:\"test2\" } ",
             "    timeout: 30000,    // 최대 대기 시간: 30초. 30초 이상이 되면 fail 부분이 실행됨.",
@@ -19,11 +19,10 @@ https://www.youtube.com/watch?v=t4ESp_po6Wc
             "})",
             ".then( (res) => {",
             "    console.log(res.data);",
-            "    this.message1 = res.data;",
             "})",
             ".catch((error) => {",
             "    console.log(error);",
             "});"
         ],
-        "description": "React script"
+        "description": "axios ajax call"
     }
