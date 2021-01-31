@@ -49,8 +49,8 @@
 
 
     <h2>
-        v-if 연습 1. 
-        #app1 인스턴스 data 프로퍼티(속성) awesome 에 어떤값을 설정하면 될까? 
+        v-if 연습 1.
+        #app1 인스턴스 data 프로퍼티(속성) awesome 에 어떤값을 설정하면 될까?
     </h2>
     <div id="app1">
         <h3 v-if="awesome">Vue is awesome!</h3>
@@ -105,3 +105,90 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app1",
+        data: {
+            awesome: true,
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app2",
+        data: {
+            awesome: false,
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app3",
+        data: {
+            awesome: false,
+        },
+        //template: ``,
+        methods: {
+            clickBind: function(event){
+                console.log( event.target );
+                /*
+                //awesome 이 true 이면 false로 아니면 true 로
+                if( this.$data.awesome ){
+                    //this.$data.awesome = false;
+                    this.$set(this.$data, "awesome", false )
+                }
+                else {
+                    this.$set(this.$data, "awesome", true )
+                }
+                */
+                this.$set( this.$data, "awesome", !this.$data.awesome );
+            }
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app5",
+        data: {
+            type: 0,
+        },
+        //template: ``,
+        methods: {
+            clickBind: function(event){
+                console.log( event.target );
+
+                var type = this.$data.type + 1 ;
+                if( type >= 4 ) {
+                    type = 0;
+                }
+
+                //this.$data.type = type ;
+                this.$set( this.$data, "type", type );
+
+                /*
+                this.$set( this.$data, "type", (this.$data.type+1) % 4 );
+                */
+            }
+        },
+        components: {
+            /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+
+        },
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+
+</script>

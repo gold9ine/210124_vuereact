@@ -134,3 +134,84 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#example3",
+        data: {
+            style1: {},
+        },
+        methods: {
+            clickArrow: function(event){
+                console.log(event.target);
+                /*
+                height: 50px;
+                width: 150px;
+                border: 1px solid black;
+                text-align: center;
+                line-height: 50px;
+                font-weight: 800;
+                color: red;
+                background-color: darkgoldenrod;
+                padding: 50px;
+                */
+               // 방법1
+               this.$data.style1 = {};
+               this.$data.style1.height = "50px";
+               this.$data.style1.width = "150px";
+               this.$data.style1.border = "1px solid black";
+
+               // 방법2
+               this.$data.style1 = {
+                    height: "50px",
+                    width: "150px",
+                    border: "1px solid black",
+                    textClign: "center",
+                    lineHeight: "50px",
+                    fontWeight: "800",
+                    color: "red",
+                    backgroundColor: "darkgoldenrod",
+                    padding: "50px",
+               };
+            }
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#elvue",
+        data: {
+            style1: {},
+        },
+        methods: {
+            overEvent: function(event){
+                console.log(event.target);
+                /*
+                배경색을 purple 로 글자색은 yellow ;
+                background-color: purple;
+                color:  yellow;
+                */
+                this.$data.style1 = {
+                    backgroundColor: "purple",
+                    color: "yellow",
+                }
+            },
+            outEvent: function(event){
+                console.log(event.target);
+                /*
+                배경색을 aqua 로 글자색은 black ;
+                background-color: aqua;
+                color:  black;
+                */
+                this.$data.style1 = {
+                    backgroundColor: "aqua",
+                    color: "black",
+                }
+            },
+        },
+    });
+
+</script>

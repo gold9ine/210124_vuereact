@@ -62,9 +62,9 @@
     <div id="app">
         <p>
             <ul>
-                <!-- 
+                <!--
                     v-for는 javascript의 for ~ in 문과 같은 것이다
-                    javascript for( var system in systems); 문과 같다 
+                    javascript for( var system in systems); 문과 같다
                 -->
                 <li v-for="system in systems">{{ system }}</li>
             </ul>
@@ -87,8 +87,8 @@
                 ];
             </p>
             <select name="" id="">
-                <option v-for="(option,index) in options" 
-                        v-bind:key="index" 
+                <option v-for="(option,index) in options"
+                        v-bind:key="index"
                         v-bind:value="option.value">
                     {{ option.text }} : {{option.value}}
                 </option>
@@ -99,3 +99,29 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            systems: ["android", "ios", "window"],
+            arr: [1,2,3,4,5],
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app1",
+        data: {
+            options: [
+                { text: 'One', value: 'A' },
+                { text: 'Two', value: 'B' },
+                { text: 'Three', value: 'C' },
+            ],
+        },
+    });
+
+</script>
