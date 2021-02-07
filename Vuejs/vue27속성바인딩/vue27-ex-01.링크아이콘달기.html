@@ -46,7 +46,7 @@
             ==> 클릭된 a 태그의 href 속성값에서 파일의 확장자를 어떻게 얻을 수 있나?
                 // href 의 마지막 3개 글자 추출하기 : substr()
                 var ext = href.substr(-3); // href.substr(href.lenght-3, 3);
-            
+
                 파일의 확장자가 ppt 이면 a.presentation 적용
                 파일의 확장자가 mp4 이면 a.video 적용
                 파일의 확장자가 pdf 이면 a.pdf 적용
@@ -55,13 +55,30 @@
                 파일의 확장자가 jpg 이면 a.image 적용
 
             ==> event.target에 class 속성 추가
-                예시) event.target.class = "presentation"; <== 이런 식으로하면되는데. 
+                예시) event.target.class = "presentation"; <== 이런 식으로하면되는데.
                 html 의 class 속성을 javascript에서 사용하려면 어떻게?
-                event.target.className = "presentation"; 
+                event.target.className = "presentation";
 
             ==> a 태그의 리다이렉트 이벤트 취소 기능 필요
                 event.preventDefault()
                 event.stopPropagation()
+
+
+            결과물 예시
+            <ul class="icon-links">
+                <li><a class="presentation" href="presentation.ppt">Presentation slides</a></li>
+                <li><a class="viedo"        href="video.mp4">Video of presentation</a></li>
+                <li><a class="pdf"          href="notes.pdf">Notes for presentation</a></li>
+                <li><a class="image"        href="icons.gif">GIF Icon sprite</a></li>
+                <li><a class="image"        href="icons.png">PNG Icon sprite</a></li>
+                <li><a class="image"        href="icons.jpg">PNG Icon sprite</a></li>
+                <li><a class="presentation" href="fuyyu.ppt">Presentation slides</a></li>
+                <li><a class="viedo"        href="fyyuy.mp4">Video of presentation</a></li>
+                <li><a class="viedo"        href="uydyuflk.pdf">Notes for presentation</a></li>
+                <li><a class="image"        href="OIP.gif">GIF Icon sprite</a></li>
+                <li><a class="image"        href="ID7890IO.png">PNG Icon sprite</a></li>
+                <li><a class="image"        href="PFDY.jpg">PNG Icon sprite</a></li>
+            </ul>
     </xmp>
     <hr>
     <div id="app">
@@ -84,7 +101,56 @@
     </div>
     <hr>
 
-    
+
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vuex@3.3.0/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vue-router@3.1.6/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios 플러그인 임포트 */</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        methods: {
+            aClick: function(event){
+                // a 태그의 리다이렉트 이벤트 취소
+                event.preventDefault();
+                event.stopPropagation();
+
+                // 클릭된 a 태그의 href 속성값을 어떻게 얻을 수 있나?
+                var href = event.target.href;
+
+                // 클릭된 a 태그 href 의 마지막 3개 글자 어떻게 얻을 수 있나?
+                // href 의 마지막 3개 글자 추출하기 : substr()
+                var ext = href.substr( href.length-3, 3);  // href.substr(-3);
+
+                // 파일의 확장자가 ppt 이면 a.presentation 적용
+                // 파일의 확장자가 mp4 이면 a.video 적용
+                // 파일의 확장자가 pdf 이면 a.pdf 적용
+                // 파일의 확장자가 gif 이면 a.image 적용
+                // 파일의 확장자가 png 이면 a.image 적용
+                // 파일의 확장자가 jpg 이면 a.image 적용
+                if( ext === "ppt") {
+                    event.target.className = "presentation";
+                }
+                else if( ext === "mp4") {
+                    event.target.className = "video";
+                }
+                else if( ext === "pdf") {
+                    event.target.className = "pdf";
+                }
+                else {
+                    event.target.className = "image";
+                }
+
+            }
+        },
+    });
+
+
+</script>

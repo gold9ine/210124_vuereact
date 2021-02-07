@@ -80,3 +80,64 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app1",
+        data: {
+            idA: null,
+            classA: null,
+            styleA: null,
+            message: null,
+            imagePath: null,
+        },
+        methods: {
+            clickBindId: function(event){
+                console.log(event.target);
+                // this.$data.idA = "abc";
+                this.$set(this.$data, "idA", "abc" );
+            },
+            clickBindClass: function(event){
+                console.log(event.target);
+                // this.$data.classA = "container";
+                this.$set( this.$data, "classA", "container");
+            },
+            clickBindStyle: function(event){
+                console.log(event.target);
+                // this.$data.styleA = "color: blue, font-size: 20pt;";
+                this.$set( this.$data, "styleA", "color: blue; font-size: 20pt;");
+            },
+            clickBindValue: function(event){
+                console.log(event.target);
+                // this.$data.message = "v-bind value";
+                this.$set( this.$data, "message", "v-bind value");
+            },
+            clickBindSrc: function(event){
+                console.log(event.target);
+                // this.$data.imagePath = "../images/heart.png";
+                this.$set( this.$data, "imagePath", "../images/heart.png");
+            },
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app2",
+        data: {
+            message: null,
+            imagePath: "../images/accept.png",
+        },
+        methods: {
+            clickBindSrc: function(event){
+                // this.$data.message   = "버튼 클릭";
+                // this.$data.imagePath = "../images/action_refresh.gif";
+                this.$set(this.$data, "message"  , "버튼 클릭" );
+                this.$set(this.$data, "imagePath", "../images/action_refresh.gif" );
+            }
+        },
+    });
+
+</script>

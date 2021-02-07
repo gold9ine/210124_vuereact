@@ -78,32 +78,127 @@
 
     <div id="app">
         <!-- component-header -->
-        <header>
-            Header
-        </header>
-        
+        <component-header></component-header>
+
         <!-- component-content -->
-        <div id="content">
-            <p>Content</p>
-            
-            <!-- component-aside -->
-            <aside>
-                Aside
-            </aside>
-            
-            <!-- component-content-list -->
-            <div id="content-list">
-                List
-            </div>
-        </div>
-        
+        <component-content></component-content>
+
         <!-- component-footer -->
-        <footer>
-            Footer
-        </footer>
+        <component-footer></component-footer>
     </div>
 
-    
+
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    var ComponentHeader = {
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return {
+            }
+        },
+        template: `
+        <header>
+            Header
+        </header>
+        `,
+    };
+    var ComponentAside = {
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return {
+            }
+        },
+        template: `
+        <aside>
+            Aside
+        </aside>
+        `,
+    };
+    var ComponentContentList = {
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return {
+            }
+        },
+        template: `
+        <div id="content-list">
+            List
+        </div>
+        `,
+    };
+    var ComponentContent = {
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return {
+            }
+        },
+        template: `
+        <div id="content">
+            <p>Content</p>
+
+            <!-- component-aside -->
+            <component-aside></component-aside>
+
+            <!-- component-content-list -->
+            <component-content-list></component-content-list>
+        </div>
+        `,
+        components:{
+            "component-aside": ComponentAside,
+            "component-content-list": ComponentContentList
+        }
+    };
+    var ComponentFooter= {
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return {
+            }
+        },
+        template: `
+        <footer>
+            Footer
+        </footer>
+        `,
+    };
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+
+        },
+        //template: ``,
+        methods: {
+
+        },
+        components: {
+            /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+            "component-header": ComponentHeader,
+            "component-content": ComponentContent,
+            "component-footer": ComponentFooter
+        },
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+</script>

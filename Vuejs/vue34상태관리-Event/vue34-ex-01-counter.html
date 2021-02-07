@@ -94,3 +94,83 @@
 </body>
 
 </html>
+
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+  var ComponentChild = {
+      /* pdtmc^2w */
+      props: ["num"] ,
+      data: function() {
+          return {
+            // num1: "abc",
+          }
+      },
+      template: `
+          <div class="component-child">
+              Child counter : {{ num }} <br>
+              <button name="child" v-on:click="addCounter">+</button>
+              <button name="child" v-on:click="subCounter">-</button>
+          </div>
+      `,
+      methods: {
+        addCounter: function(event) {
+          this.$emit("add-counter", event, +10);
+        },
+        subCounter: function(event) {
+          this.$emit("sub-counter", event, -10);
+        }
+      },
+      components: {
+          /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+
+      },
+      computed: {
+
+      },
+      watch: {
+
+      },
+      mounted: function() {
+          console.log("mounted");
+      },
+      updated: function() {
+          console.log("updated");
+      },
+  };
+
+  new Vue({
+      /* edtmc^2w */
+      el: "#app",
+      data: {
+        counter: 0,
+      },
+      //template: ``,
+      methods: {
+        addCounter: function(event, param) {
+          this.$set(this.$data, "counter", this.$data.counter + param)
+        },
+        subCounter: function(event, param) {
+          this.$set(this.$data, "counter", this.$data.counter + param)
+        }
+      },
+      components: {
+          /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+        'component-child': ComponentChild
+      },
+      computed: {
+
+      },
+      watch: {
+
+      },
+      mounted: function() {
+          console.log("mounted");
+      },
+      updated: function() {
+          console.log("updated");
+      },
+  });
+
+</script>

@@ -54,3 +54,53 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    var componentBox = {
+        props: ['num'],
+        data: function() {
+            return {
+
+            };
+        },
+        template: `
+        <span style="display:inline-block; font-size:3em; border:1px dashed blue; padding:10px 20px; margin:5px; text-align:center;">
+            {{num}}
+        </span>
+        `
+    };
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            arr: [1,2,3,4,5,6,7,8,9,10],
+        },
+        //template: ``,
+        methods: {
+            clickAddBox: function(event) {
+                this.$set(this.$data.arr, this.$data.arr.length, this.$data.arr.length+1);
+            }
+        },
+        components: {
+            /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+            "component-box": componentBox,
+
+        },
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+</script>

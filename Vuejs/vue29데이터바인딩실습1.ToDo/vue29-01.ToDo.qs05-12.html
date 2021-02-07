@@ -192,15 +192,16 @@
 
 <body>
     <pre style="text-align:left;">
-    
+
     선 학습 필요 사항:
-        array.reduce() 사용법 
-        array.map() 사용법 
-        array.filter() 사용법 
-        array.findIndex() 사용법 
-        array.splice() 사용법 
-        
-    todoItems 는 아래와 같다고 가정한다 
+        array.reduce() 사용법
+        array.map() 사용법
+        array.filter() 사용법
+        array.findIndex() 사용법
+        array.splice() 사용법
+
+
+    todoItems 는 아래와 같다고 가정한다
     todoItems = [
         { id: 1, todo: "영화보기", done: false },
         { id: 2, todo: "주말 산책", done: true },
@@ -208,18 +209,22 @@
         { id: 4, todo: "잠실 야구장", done: false }
     ]
 
+    todoItems에서 최대 id 값을 구하는 방법.
+        방법1. todoItems.reduce()
+        방법2. todoItems.map() 를 사용하는 방법
+
     기능 추가
         1. add 할 때 this.$data.todoItems 가 빈 배열인 경우 기능 추가
-        2. add 후에 input 태그의 입력 값 지우기. 
+        2. add 후에 input 태그의 입력 값 지우기.
         3. 토글 할 때 findIndex 로 못 찾는 경우에 대한 방어 코드 추가.
-        4. input 태그에 빈 문자일이 입력 되는 경우는 배열에 추가되지 않게. 
-        5. todo 타이틀 바꾸기. 기능 누락. 추가 필요
+        4. input 태그에 빈 문자일이 입력 되는 경우는 배열에 추가되지 않게.
+        5. todo 타이틀 바꾸기. 기능 누락. 기능 추가가 필요합니다.
 
     주의 사항.
-        1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨. 
-            null 로 설정하면 됨. 
-        2. 삭제 버튼을 클릭하면 click 이벤트가 bubbling 안되게 
-            이벤트 취소하는 기능을 추가해야 한다. 
+        1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨.
+            null 로 설정하면 됨.
+        2. 삭제 버튼을 클릭하면 click 이벤트가 bubbling 안되게
+            이벤트 취소하는 기능을 추가해야 한다.
             변경 전: v-on:click="removeTodo(todoItem.id, index)"
             변경 후: v-on:click.stop="removeTodo(todoItem.id, index)"
     </pre>
@@ -261,6 +266,7 @@
         </div>
 
         <!-- TodoList -->
+        <!-- "checked(todoItem.done)"  <==> "todoItem.done ? 'checked': ''"  -->
         <section>
             <transition-group name="list" tag="ul">
                 <li v-for="(todoItem, index) in todoItems"
@@ -288,3 +294,105 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            newTodoItem: null,
+            showModal: null,
+            todoItems: [
+                { id: 1, todo: "영화보기", done: false },
+                { id: 2, todo: "주말 산책", done: true },
+                { id: 3, todo: "ES6 학습", done: false },
+                { id: 4, todo: "잠실 야구장", done: false }
+            ],
+        },
+        //template: ``,
+        methods: {
+            addTodo: function(event){
+                console.log(event.target);
+
+                //최대 id 값을 구하는 방법.
+                //방법1. .reduce()
+                //방법2. .map() 를 사용하는 방법
+                var maxObj = null;
+                if( this.$data.todoItems.length>0) {
+                    maxObj = this.$data.todoItems.reduce( (prevItem,nextItem)=>{
+                        // 최대 id 값을 갖고있는 item을 찾는다.
+                        return prevItem.id > nextItem.id ? prevItem : nextItem;
+                    });
+                }
+                else {
+                    // 빈 배열인 경우
+                    maxObj = {
+                        id: 0,
+                        todo: null,
+                        done: false,
+                    }
+                }
+
+                // 추가할 객체 생성:
+                var newTodo = {
+                    id: maxObj.id + 1,
+                    todo: this.$data.newTodoItem,
+                    done: false
+                };
+                // this.$data.todoItems.push( newTodo );
+                // this.$data.todoItems[this.$data.todoItems.length] = newTodo;
+                this.$set(this.$data.todoItems, this.$data.todoItems.length, newTodo );
+
+                // 화면에 남아있는 입력값 지우기
+                // this.$data.newTodoItem = "";
+                this.$set( this.$data, "newTodoItem", "" );
+            },
+            checked: function(done){
+                // "checked(todoItem.done)"  <==> "todoItem.done ? 'checked': ''"
+                if( done ) {
+                    return "checked";
+                }
+                else {
+                    return null;
+                }
+            },
+            doneToggle: function(id, index){
+                // 예시:
+                // 변경전: { id: 1, todo: "영화보기", done: false }
+                // 변경후: { id: 1, todo: "영화보기", done: true }
+                // this.$data.todoItems[index].done =  !this.$data.todoItems[index].done;
+                this.$set(this.$data.todoItems[index], "done", !this.$data.todoItems[index].done);
+            },
+            removeTodo: function(id, index){
+                this.$data.todoItems.splice(index, 1);
+
+                // event.stopPropagation();
+                // event.preventDefault();
+            },
+            clearAll: function(){
+                // 전체 삭제
+                // this.$data.todoItems = [];
+                this.$set(this.$data, "todoItems", []);
+            },
+        },
+        components: {
+            /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+
+        },
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+</script>

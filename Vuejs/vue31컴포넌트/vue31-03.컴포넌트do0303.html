@@ -17,8 +17,8 @@
 <body>
     <xmp>
         Vue 컴포넌트 만드는 방법을 배운다.
-        
-        왜 컴포넌트를 사용하는가? 
+
+        왜 컴포넌트를 사용하는가?
             ==> 컴포넌트를 재사용하기 위해서.
 
         1. Vue 컴포넌트 만드는 방법을 실습. 페이지 53 참조
@@ -34,7 +34,7 @@
         지역 컴포넌트 템플릿
         <div>
             지역 컴포넌트가 등록되었습니다!
-            <span style="border: 1px dashed blue; background-color:lightgray; padding: 5px;" 
+            <span style="border: 1px dashed blue; background-color:lightgray; padding: 5px;"
                   onclick="lclick">
                 {{localmsg}}
             </span>
@@ -59,3 +59,68 @@
 </body>
 
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"> /* JSX를 자바스크립트로 변환 */</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery 플러그인 임포트 */</script>
+<script>
+Vue.component("vue31-03.컴포넌트do0303", { 
+    /* pdtmc^2w */
+    props: [] ,
+    data: function() {
+        return {
+        },
+    },
+    template: `
+        
+    `,
+    methods: {
+        
+    },
+    components: {
+        /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+        
+    },
+    computed: {
+        
+    },
+    watch: {
+        
+    },
+    mounted: function() {
+        console.log("mounted");
+    },
+    updated: function() {
+        console.log("updated");
+    },
+});
+
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+
+        },
+        //template: ``,
+        methods: {
+
+        },
+        components: {
+            /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+
+        },
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+</script>

@@ -18,6 +18,7 @@
         vue.js 에서의 style 속성 설정 방식을 학습한다.
         style 속성으로 설정할 값은 data 프로퍼티에 저장.
         style 속성 설정은 v-bind:style 디렉티브를 사용하여 작성.
+        class 속성 설정은 v-bind:class 디렉티브를 사용하여 작성.
 
         single style binding:
         ------------------
@@ -54,6 +55,12 @@
 
     <div id="example1">
         도전1. Vue.js 를 사용한 style single 바인딩 복습. v-bind:style 객체 사용<br>
+        <pre>
+            .myColor {
+                background-color: aqua;
+                color: purple;
+            }
+        </pre>
         <button id="btn1" v-bind:style="myColor">버튼1</button>
     </div>
 
@@ -103,7 +110,7 @@
         }
     </style>
     <div id="example3">
-        <h2> v-bind:class 를 사용한 예제 </h2>
+        <h2> v-bind:class 를 사용한 다중 class 적용 예제 </h2>
         <button id="btn1" v-bind:class="mystyle">버튼1</button>
         <p>
             <input type="checkbox" v-model="mystyle.set1" value="true" />set1 디자인<br />
@@ -112,7 +119,7 @@
         </P>
     </div>
     <hr />
-    
+
     <div id="example4">
         <h2> v-bind:style 를 사용한 예제 </h2>
         <button id="btn1" v-bind:style="[mystyle.set1,mystyle.set2,mystyle.set3]">버튼1</button>
@@ -125,3 +132,75 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#example1",
+        data: {
+            myColor: {
+                backgroundColor: "aqua",
+                color: "purple",
+            },
+        },
+    });
+    new Vue({
+        /* edtmc^2w */
+        el: "#example2",
+        data: {
+            myColor: {
+                backgroundColor: "aqua",
+                color: "purple",
+            },
+            myLayout: {
+                width: "150px",
+                height: "80px",
+                textAlign: "center",
+            },
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#example3",
+        data: {
+            mystyle : {
+                set1: {
+                    backgroundColor: "aqua",
+                    color: "purple",
+                },
+                set2: {
+                    textAlign: "center",
+                    width: "120px",
+                },
+                set3: {
+                    border: "sandybrown dashed 5px",
+                },
+            }
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#example4",
+        data: {
+            mystyle : {
+                set1: {
+                    backgroundColor: "aqua",
+                    color: "purple",
+                },
+                set2: {
+                    textAlign: "center",
+                    width: "120px",
+                },
+                set3: {
+                    border: "sandybrown dashed 5px",
+                },
+            }
+        },
+    });
+
+
+</script>
