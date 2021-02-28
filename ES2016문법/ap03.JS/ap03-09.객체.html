@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>객체 학습 내용</title>
+    <link rel="stylesheet" href="../css/reset.css">
+
+</head>
+<body>
+    <div>
+        <h2>객체 학습 내용</h2>
+        <ol>
+            <li>객체 선언 방법
+                <ul>
+                    <li>객체 리터럴( {} ) 을 이용한 객체 선언</li>
+                    <li>생성자 함수를 이용한 객체 선언</li>
+                </ul>
+            </li>
+            <li>객체 CRUD 방법
+                <table class="table">
+                    <thead>
+                        <tr style="font-weight:bold;" class="row0">
+                            <td data-row="0" data-col="0" class="col0">생성 </td>
+                            <td data-row="0" data-col="1" class="col1">var obj = { } ; </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="font-weight:normal" class="row1">
+                            <td data-row="1" data-col="0" class="col0">추가. Create </td>
+                            <td data-row="1" data-col="1" class="col1"> obj.name=값; <br> obj['name']=값;
+                            </td>
+                        </tr>
+                        <tr style="font-weight:normal" class="row2">
+                            <td data-row="2" data-col="0" class="col0">읽기. Read </td>
+                            <td data-row="2" data-col="1" class="col1">obj.name  <br> obj['name'] </td>
+                        </tr>
+                        <tr style="font-weight:normal" class="row3">
+                            <td data-row="3" data-col="0" class="col0">수정. Update </td>
+                            <td data-row="3" data-col="1" class="col1">obj.name=값; <br> obj['name']=값; </td>
+                        </tr>
+                        <tr style="font-weight:normal" class="row4">
+                            <td data-row="4" data-col="0" class="col0">삭제. Delete </td>
+                            <td data-row="4" data-col="1" class="col1">delete obj.name; </td>
+                        </tr>
+                        <tr style="font-weight:normal" class="row5">
+                            <td data-row="5" data-col="0" class="col0">정렬. Sort </td>
+                            <td data-row="5" data-col="1" class="col1">X </td>
+                        </tr>
+                        <tr style="font-weight:normal" class="row6">
+                            <td data-row="6" data-col="0" class="col0">검색. Search </td>
+                            <td data-row="6" data-col="1" class="col1">X </td>
+                        </tr>
+                        <tr style="font-weight:normal" class="row7">
+                            <td data-row="7" data-col="0" class="col0">복제. </td>
+                            <td data-row="7" data-col="1" class="col1">Object.create() </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>객체 복사
+                <ul>
+                    <li>객체 얕은 복사</li>
+                    <li>객체 깊은 복사</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    <xmp>
+        객체 리터럴( {} ) 을 이용한 객체 선언
+        var foo = {
+            name : 'foo',
+            run : function () { return this.name; }
+        };
+
+        생성자 함수를 이용한 객체 선언. 상속 구현 시 사용
+        function Goo(name, age) {
+            this.name = name;
+            this.run = function () { return this.name; };
+        };
+        var goo = new Goo('goo', 31);
+        ※생성자 함수란 첫 글자를 대문자로 시작하는 함수
+
+
+        // 리터럴을 이용한 객체 생성
+        var foo = {
+            name  : 'foo',
+            age   : 30, 
+            array : [1,4,5,5], 
+            run   : function () {
+                return this.name;
+            }
+        };
+
+        // CRUD : R. 읽기- 마침표 표기법
+        console.log( foo.name );
+
+
+        // CRUD : R. 읽기- 대괄호 표기법
+        console.log( foo['age']  );
+
+
+        console.log( foo.run()  );
+
+
+        // CRUD : C. 추가
+        foo.gender   = 'man';
+        foo['nickname'] = 'babo';
+        console.log( foo.gender   );
+        console.log( foo.nickname );
+
+
+        /// CRUD : U. 수정
+        foo.name = 'bar';
+        foo['age']  = 50;
+        console.log( foo.name );
+        console.log( foo.age  );
+
+        // CRUD : D. 삭제
+        delete foo.age;
+        delete foo.gender;
+        console.log( foo.age    );
+        console.log( foo.gender );
+
+
+
+        // 프로퍼티 수정
+        name 을 'bar' 로 변경
+        age 를 50 으로 변경
+        name과 age를 출력하시오
+
+
+
+        // 프로퍼티 추가
+        gender   프로퍼티 추가
+        nickname   프로퍼티 추가
+        gender 와 nickname 을 출력하시오
+        
+
+        // 프로퍼티 삭제
+        nickname  프로퍼티 삭제
+        gender   프로퍼티 삭제
+        gender 와 nickname 을 출력하시오
+
+    </xmp>
+</body>
+</html>
+
+
+<script>
+    // 객체 리터럴을 이용한 객체 생성
+    var person = {
+        name : 'foo',
+        age : 30,
+        run : function() { return this.name; }
+    };
+    console.log( typeof person, person );
+
+
+    // 생성자 함수를 이용한 객체 생성
+    function Foo(name, age) {
+        this.name = name;
+        this.age = age;
+            this.run = function() { return this.name; };
+    };
+    var goo = new Foo('goo', 40);
+    console.log( typeof goo, goo );
+</script>
+
+
+<script>
+    // 객체 리터럴을 이용한 객체 생성
+    var foo = {
+         name   : 'foo'     /* 프로퍼티 name = 'foo'  */
+       , age    : 30        /* 프로퍼티 age = 30      */
+       , array  : [1,4,5,5] /* 프로퍼티 array = [1,4,5,5] */
+       , run    : function () { return this.name; } /* 메서드 */
+    };
+
+    // 프로퍼티 읽기 - 마침표 표기법
+    console.log( foo.name );
+    console.log( foo.age );
+    console.log( foo.nickname );
+
+    // 프로퍼티 읽기 - 대괄호 표기법
+    console.log( foo['name'] );
+    console.log( foo['age'] );
+    console.log( foo['nickname'] );
+
+
+    // 프로퍼티 수정
+    foo.name = 'bar';
+    foo.age  = 50;
+    console.log( foo.name );
+    console.log( foo.age  );
+
+    // 프로퍼티 추가
+    foo.gender   = 'man';
+    foo.nickname = 'babo';
+    console.log( foo.gender   );
+    console.log( foo.nickname );
+
+    // 프로퍼티 삭제
+    delete foo.age;
+    delete foo.gender;
+    console.log( foo.age    );
+    console.log( foo.gender );
+</script>

@@ -141,7 +141,7 @@
             "        props: [] ,",
             "        data: function() {",
             "            return {",
-            "            },",
+            "            }",
             "        },",
             "        //template: ``,",
             "        methods: {",

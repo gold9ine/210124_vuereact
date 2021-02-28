@@ -52,8 +52,11 @@
         methods: {
             /* var doClick = function(event){ }; */
             doClick : function(event){
+                console.log(event.target);
+                
                 //this.$data.message = "change message when a button clicked!!!" ;
-                this.$set( this.$data, "message", "change message when a button clicked!!!" )
+                var time = new Date().toLocaleString()
+                this.$set( this.$data, "message", "change message when a button clicked!!!" + time);
             },
         },
         components: {
@@ -70,15 +73,20 @@
 
             console.log("mounted");
 
-            window.setTimeout( ()=> {
+            window.setTimeout( ()=>{
+                console.log(this);//
+                
                 //this.$data.message = "change message after 3 seconds!!!";
                 this.$set( this.$data, "message", "change message after 3 seconds!!!");
-            }, 3000 );
+            }, 3000); // 3000ms = 3s
 
-            window.setTimeout( ()=>{
+            var self = this;
+            window.setTimeout( function () {
+                console.log(self);//
+                
                 //this.$data.message = "change message after 5 seconds!!!";
-                this.$set( this.$data, "message", "change message after 5 seconds!!!");
-            }, 5000 );
+                self.$set( self.$data, "message", "change message after 5 seconds!!!");
+            }, 5000); // 5000ms = 5s
         },
         updated: function() {
             console.log("updated");

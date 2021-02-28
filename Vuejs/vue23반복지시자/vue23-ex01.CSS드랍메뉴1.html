@@ -225,6 +225,21 @@
 </head>
 
 <body>
+    <xmp>
+    객체 배열과 v-for 지시자를 이용하여 드랍 메뉴를 만들어 본다.
+    v-for 지시자 설정 방법을 반복하여 실습한다.
+    
+    template 예시) 
+    <li v-for="(mainitem, i) in mainitems" v-bind:key="i">
+        <a href="#">{{mainitem.text}}</a>
+        <ul>
+            <li v-for="(subitem, j) in mainitem.subitems" v-bind:key="j">
+                <a href="#">{{subitem.text}}</a>
+            </li>
+        </ul>
+    </li>
+    
+    </xmp>
     <h2>CSS 로 구현된 드랍 메뉴</h2>
     <div>
         <ul id="menu1">
@@ -285,7 +300,37 @@
         </ul>
     </div>
 
-    
+    <script type="text/x-template" id="template1">
+    <div>
+        <ul id="menu1">
+            <li v-for="(mainitem, i) in mainitems" v-bind:key="i">
+                <a href="#">{{mainitem.text}}</a>
+                <ul>
+                    <li v-for="(subitem, j) in mainitem.subitems" v-bind:key="j">
+                        <a href="#">{{subitem.text}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    </script>
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app1",
+        data: {
+            mainitems: [
+                {text:"MENU1", subitems:[{text:"MENU1-1"},{text:"MENU1-2"}]},
+                {text:"MENU2", subitems:[{text:"MENU2-1"},{text:"MENU2-2"},{text:"MENU2-3"},{text:"MENU2-4"}]},
+                {text:"MENU3", subitems:[{text:"MENU3-1"},{text:"MENU3-2"},{text:"MENU3-3"}]},
+            ],
+        },
+        template: `#template1`,
+    });
+</script>

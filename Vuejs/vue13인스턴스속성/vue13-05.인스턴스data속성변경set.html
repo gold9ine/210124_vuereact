@@ -110,12 +110,7 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"> /* JSX를 자바스크립트로 변환 */</script>
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
-<script src="https://unpkg.com/vuex@3.3.0/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
-<script src="https://unpkg.com/vue-router@3.1.6/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios 플러그인 임포트 */</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery 플러그인 임포트 */</script>
 <script>
     new Vue({
         /* edtmc^2w */
@@ -128,6 +123,7 @@
             change1: function(event){
                 console.log(event.target);
 
+                //[100, 2, 3, 4, 5] <== 방법1을 적용
                 this.$data.arr[0] = 100;
                 console.log(this.$data.arr);
 
@@ -136,18 +132,22 @@
             },
             change2: function(event){
                 console.log(event.target);
+
+                //[100, 300, 3, 4, 5] <== 방법2을 적용
                 //this.$data.arr[1] = 300;
                 Vue.set( this.$data.arr, 1, 300);
             },
             change3: function(event){
                 console.log(event.target);
-                // [3,4,5]
+                
+                //[3, 4, 5] <== 방법3을 적용
                 // splice() 메서드 안에는 재할당 기능이 내장되어 있다.
-                this.$data.arr.splice(0,2); // 0부터 2번 전까지 지우고 새로운 배열을 만든다.
+                this.$data.arr.splice(0,2); // 0부터 2번 전까지 지우고 새로운 배열을 만든다. ==>0번과 1번을 삭제
             },
             change4: function(event){
                 console.log(event.target);
 
+                //[500, 3, 4, 5, 70]      <== 방법4을 적용
                 console.log(this.$data.arr); // [3,4,5]
 
                 // spread 연산자

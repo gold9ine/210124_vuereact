@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>객체 배열 학습</title>
+    <link rel="stylesheet" href="../css/reset.css">
+
+</head>
+
+<body>
+    <xmp>
+        Object Arrary 대해서 학습한다.
+
+        Object Arrary 예시)
+        var objarray = [
+            { text: 'One', value: 'A' },
+            { text: 'Two', value: 'B' },
+            { text: 'Three', value: 'C' }
+        ];
+
+        1. objarray 에 { text: 'Four', value: 'D' } 를
+        추가하시오.
+        ==> create
+
+        2. objarray 에서 { text: 'Two', value: 'B' } 를
+        { text: '2', value: '2' } 로 바꾸시오.
+        ==> update
+
+        3. objarray 에서 { text: 'Three', value: 'C' } 를
+        삭제하시오.
+        ==> delete
+
+        4. objarray 에서 text의 값이 'One' 인 객체들을 찾으시오
+        ==> search
+
+        1. 배열 생성
+
+        2. 배열 요소 추가
+
+        3. 배열 요소 수정
+
+        4. 배열 요소 삭제
+
+        5. 배열 정렬
+            var arr = [1,3, 3784, 98, 842, 8230] 을 오름차순으로 정렬하시오.
+
+        6. 배열 검색
+            filter() 를 사용하여 [1,3, 3784, 98, 842, 8230] 에서 100이상인 값만 찾으시오.
+
+        7. 배열 복제하기
+            var arr = [1,3, 3784, 98, 842, 8230] 의 복제 배열을 만드시오.
+
+        8. [1,3, 3784, 98, 842, 8230] 의 총합을 구하시오.
+    </xmp>
+</body>
+
+</html>
+
+<script>
+    var objarray = [
+        { text: 'One', value: 'A' },
+        { text: 'Two', value: 'B' },
+        { text: 'Three', value: 'C' }
+    ];
+
+    //1. objarray 에 { text: 'Four', value: 'D' } 를 추가하시오. ==> create
+    objarray[objarray.length] = { text: 'Four', value: 'D' };
+    objarray.push({ text: 'Four', value: 'D' });
+
+    //2. objarray 에서 { text: 'Two', value: 'B' } 를 { text: '2', value: '2' } 로 바꾸시오. ==> update
+    objarray[1] = { text: '2', value: '2' }
+
+    objarray[1].text = '2';
+    objarray[1].value = '2';
+
+    //3. objarray 에서 { text: 'Three', value: 'C' } 를 삭제하시오. ==> delete
+    objarray.splice(2,1)
+
+    //4. objarray 에서 text가 'One' 객체들을 찾으시오 ==> search
+    var arrOne = [];
+    for( var i=0; i< objarray.length; i++){
+        var obj = objarray[i];
+        if( obj.text === 'One') {
+            // text가 'One' 이 있는 객체들을 담을 배열에 추가
+            arrOne[arrOne.length] = obj;
+        }
+        else {
+            // 패스.
+        }
+    }
+    console.log("arrOne", arrOne)// [{ text: 'One', value: 'A' }]
+
+    var arrOne2 = objarray.filter(function(item, index){
+        if (item.text === 'One') {
+            return true
+        }
+        else {
+            return false
+        }
+    })
+    console.log("arrOne2", arrOne2 )// [{ text: 'One', value: 'A' }]
+
+
+    for(index in objarray) {
+        debugger;
+        var option = objarray[index];
+        console.log("text:>> " + option.text, "value:>>" + option.value);
+
+        console.log("text:>> " + option["text"], "value:>>" + option["value"]);
+    }
+
+    for(option of objarray) {
+        debugger;
+
+        console.log("text:>> " + option.text, "value:>>" + option.value);
+        console.log("text:>> " + option["text"], "value:>>" + option["value"]);
+    }
+
+    // map 함수를 사용하여 프로퍼티 추가
+    var newopt = objarray.map(function (obj, index) {
+        obj["no"] = index;
+        return obj;
+    });
+    console.log(newopt);  // [  { text:"", value:"", no:"" },  { text:"", value:"", no:"" },  { text:"", value:"", no:"" } ]
+
+</script>

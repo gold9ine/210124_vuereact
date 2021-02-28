@@ -86,14 +86,18 @@
 </body>
 
 </html>
+
 <script>
     function btn1_onclick(event){
+        // 태그 찾기: <div id="app" style="background-color: orange;">
+        // DOM API를 사용하여 속성값 set 하기:  setAttribute() <==> jQuery.attr()
         var tag = document.getElementById("app");
         tag.setAttribute("class", "csbord whsize"); // 다중 class 적용 ==> 문자열로 처리
         tag.setAttribute("style", "background-color: aqua;");
     }
 
     function btn2_onclick(event){
+        // 태그 찾기: <div id="app" style="background-color: orange;">
         var tag = document.getElementById("app");
         tag.className = "csbord whsize";
         tag.style.backgroundColor = "aqua";
@@ -104,6 +108,7 @@
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
 <script>
+
     new Vue({
         /* edtmc^2w */
         el: "#app3",
@@ -115,6 +120,21 @@
         },
         //template: ``,
         methods: {
+            btn5_onclick: function(event, show ){
+                console.log(event.target);
+                // this.$data.css1.csbord = true;
+                // this.$data.css1.whsize = true;
+
+                // this.$data.css1.csbord = false;
+                // this.$data.css1.whsize = false;
+
+                this.$data.css1.csbord = show;
+                this.$data.css1.whsize = show;
+
+                for( const prop in this.$data.css1 ) {
+                    this.$data.css1[prop] = show;
+                }
+            },
             btn6_onclick: function(event, className, show ){
                 console.log(event.target);
                 //btn6_onclick(this.event, 'whsize', true )
@@ -127,21 +147,6 @@
                 // this.$data.css1["csbord"] = true;
                 // this.$data.css1["csbord"] = false;
                 this.$data.css1[className] = show;
-            },
-            btn5_onclick: function(event, show ){
-                console.log(event.target);
-                // this.$data.css1.csbord = true;
-                // this.$data.css1.whsize = true;
-
-                // this.$data.css1.csbord = false;
-                // this.$data.css1.whsize = false;
-
-                this.$data.css1.csbord = show;
-                this.$data.css1.whsize = show;
-
-                for( const prop in this.$data.css1) {
-                    this.$data.css1[prop] = show;
-                }
             },
         },
     });

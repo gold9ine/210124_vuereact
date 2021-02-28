@@ -2,7 +2,10 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>attributes프로퍼티</title>
+    <link rel="stylesheet" href="../css/reset.css">
 </head>
 
 <body>
@@ -11,4 +14,25 @@
     </div>
 </body>
 
-</html>
+</html>
+<script>
+    window.onload = function () {
+        var logo = document.getElementById('logo');
+
+        // setAttribute()
+        logo.setAttribute('test', 'test');
+
+        // getAttribute()
+        console.log(logo.getAttribute('id'));
+
+        var attrs = logo.attributes;
+        var result = [];
+        for (var i = 0; i < attrs.length; i++) {
+            var attr = attrs.item(i);
+            if (attr.nodeValue) {
+                result.push(attr.nodeName + ':' + attr.nodeValue);
+            }
+        }
+        console.log(result.join('\r\n'));
+    }
+</script>

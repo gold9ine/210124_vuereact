@@ -63,12 +63,29 @@
         data: {
             a: true,
         },
+        //template: ``,
         methods: {
             clickBind: function(event){
                 console.log( event.target );
+                
                 //this.$data.a = !this.$data.a;
                 this.$set(this.$data, "a", !this.$data.a);
             }
+        },
+        components: {
+    
+        }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
         },
     });
 

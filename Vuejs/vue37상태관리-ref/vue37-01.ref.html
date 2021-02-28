@@ -26,8 +26,7 @@
         ref 를 언제 사용하는가?
         1. 직접 DOM에 접근 할 때
         2. focus 줄 때
-
-        vue에선 this.$refs 로 접근
+        3. 인스턴스나 컴포넌트에서는 this.$refs 로 접근
 
         how to know element is focused or not : document.activeElement
 
@@ -48,3 +47,39 @@
 </body>
 
 </html>
+
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+
+        },
+        //template: ``,
+        methods: {
+
+        },
+        components: {
+            /* 지역 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+
+        },
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function() {
+            console.log("mounted");
+            // <input type="text" ref="myinput1" id="myinput1"> 에 포커스 주기
+            this.$refs.myinput1.focus();
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+</script>

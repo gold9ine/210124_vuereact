@@ -99,12 +99,10 @@
             background-color: aqua;
             color: purple;
         }
-
         .set2 {
             text-align: center;
             width: 120px;
         }
-
         .set3 {
             border: sandybrown dashed 5px;
         }
@@ -146,6 +144,7 @@
             },
         },
     });
+
     new Vue({
         /* edtmc^2w */
         el: "#example2",
@@ -167,17 +166,9 @@
         el: "#example3",
         data: {
             mystyle : {
-                set1: {
-                    backgroundColor: "aqua",
-                    color: "purple",
-                },
-                set2: {
-                    textAlign: "center",
-                    width: "120px",
-                },
-                set3: {
-                    border: "sandybrown dashed 5px",
-                },
+                set1: true,
+                set2: true,
+                set3: true,
             }
         },
     });
@@ -186,7 +177,7 @@
         /* edtmc^2w */
         el: "#example4",
         data: {
-            mystyle : {
+            mystyle: {
                 set1: {
                     backgroundColor: "aqua",
                     color: "purple",
@@ -194,6 +185,7 @@
                 set2: {
                     textAlign: "center",
                     width: "120px",
+                    fontSize: "20pt",
                 },
                 set3: {
                     border: "sandybrown dashed 5px",
@@ -201,6 +193,5 @@
             }
         },
     });
-
 
 </script>

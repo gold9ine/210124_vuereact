@@ -34,7 +34,7 @@
         {{ message }}, app1
     </div>
 
-    <div id="app2">
+    <div>
         {{ message }}, app2
     </div>
 
@@ -42,15 +42,37 @@
 
 </html>
 
+<script type="text/x-template" id="template1">
+    <div id="app1">
+        {{ message }}, app1
+    </div>
+</script>
+    
+<script type="text/x-template" id="template2">
+    <div id="app2">
+        {{ message }}, app2
+    </div>
+</script>
+    
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
 <script>
-  new Vue({
-      /* edtmc^2w */
-      el: "#app2",
-      data: {
-        message : "실습 완성 축하!!!!!"
-      }
-  });
+    var divs = document.getElementsByTagName("div");
+    divs[0].setAttribute("id", "app1");
+    divs[1].setAttribute("id", "app2");
 
+    var obj = {
+        message: "Hello",
+    }
+    
+    new Vue({
+        el: "#app1", /* CSS 선택자 : 첫번째만 해당  */
+        data: obj,
+        template: "#template1",
+    })
+    new Vue({
+        el: "#app2", /* CSS 선택자 : 첫번째만 해당  */
+        data: obj,
+        template: "#template2",
+    })
 </script>

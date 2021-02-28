@@ -28,7 +28,7 @@
       형재자매 컴포넌트 간 통신은?
           이벤트 버스를 사용하여 주고 받는다.
 
-      [참조]page 62~75
+      [참조]page 68
 
       1. child-component 컴포넌트 만들기.
             pdtmc^2w 설정
@@ -53,10 +53,10 @@
 </body>
 </html>
 
-
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
 <script>
+    // child-component 지역 컴포넌트 만들기
     var ChildComponent = {
         /* pdtmc^2w */
         props: [] ,
@@ -70,8 +70,13 @@
             </div>
         `,
         methods: {
-            showLog: function(evnet) {
-                this.$emit('show-log', 'abc', 123);
+            showLog: function(event){
+                console.log( event.target )
+                
+                // this.$emit()은 사용자 정의 이벤트를 발생시킨다.
+                // 부모에게 데이터 넘기기
+                // this.$emit( "사용자이벤트명", 넘길값1, 넘길값2,... )
+                this.$emit("show-log", "abc", 123);
             }
         },
         components: {
@@ -79,9 +84,11 @@
 
         },
         computed: {
+            /* 자동처리 + 동기식. 메서드로 작성. return 필수. */
 
         },
         watch: {
+            /* 자동처리 + 비동기식. data 에 등록된 프로퍼티 모니터링. 메서드로 작성. 매개변수 입력 필수  */
 
         },
         mounted: function() {
@@ -100,14 +107,16 @@
         },
         //template: ``,
         methods: {
-            printText: function(param1, param2) {
-                this.$set(this.$data, "mesg", param1 + " : " + param2);
+            printText: function(param1, param2){
+                console.log(param1, param2);
 
-            }
+                //this.$data.mesg = param1 + "||" + param2;
+                this.$set( this.$data, "mesg", param1 + "||" + param2 );
+            },
         },
         components: {
             /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
-            'child-component': ChildComponent
+            "child-component": ChildComponent,
         },
         computed: {
 

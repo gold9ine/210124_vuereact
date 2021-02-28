@@ -224,7 +224,7 @@
         1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨.
             null 로 설정하면 됨.
         2. 삭제 버튼을 클릭하면 click 이벤트가 bubbling 안되게
-            이벤트 취소하는 기능을 추가해야 한다.
+            이벤트 취소 기능을 추가해야 한다.
             변경 전: v-on:click="removeTodo(todoItem.id, index)"
             변경 후: v-on:click.stop="removeTodo(todoItem.id, index)"
     </pre>
@@ -255,7 +255,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <span slot="footer" v-on:click="showModal = false">
+                            <span v-on:click="showModal = false">
                                 할 일을 입력하세요.
                                 <i class="closeModalBtn fas fa-times" aria-hidden="true"></i>
                             </span>
@@ -317,8 +317,8 @@
                 console.log(event.target);
 
                 //최대 id 값을 구하는 방법.
-                //방법1. .reduce()
-                //방법2. .map() 를 사용하는 방법
+                //방법1. array.reduce()
+                //방법2. array.map() 를 사용하는 방법
                 var maxObj = null;
                 if( this.$data.todoItems.length>0) {
                     maxObj = this.$data.todoItems.reduce( (prevItem,nextItem)=>{
@@ -345,17 +345,17 @@
                 // this.$data.todoItems[this.$data.todoItems.length] = newTodo;
                 this.$set(this.$data.todoItems, this.$data.todoItems.length, newTodo );
 
-                // 화면에 남아있는 입력값 지우기
+                // input 태그에 남아있는 입력값 지우기
                 // this.$data.newTodoItem = "";
                 this.$set( this.$data, "newTodoItem", "" );
             },
             checked: function(done){
                 // "checked(todoItem.done)"  <==> "todoItem.done ? 'checked': ''"
                 if( done ) {
-                    return "checked";
+                    return "checked";// 또는 {checked: true}
                 }
                 else {
-                    return null;
+                    return null; // 또는 {checked: false}
                 }
             },
             doneToggle: function(id, index){
@@ -366,10 +366,12 @@
                 this.$set(this.$data.todoItems[index], "done", !this.$data.todoItems[index].done);
             },
             removeTodo: function(id, index){
+                // 배열에서 삭제. splice(index, 1);
                 this.$data.todoItems.splice(index, 1);
 
-                // event.stopPropagation();
-                // event.preventDefault();
+                // 이벤트 취소를 이용하여 click 버블링 막기
+                //event.stopPropagation();
+                //event.preventDefault();
             },
             clearAll: function(){
                 // 전체 삭제

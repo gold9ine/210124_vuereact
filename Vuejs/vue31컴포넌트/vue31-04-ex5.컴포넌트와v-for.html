@@ -10,7 +10,7 @@
 
 <body>
     <xmp>
-        Vue.js v-for 지시자 에 대해서 학습한다.
+        Vue.js v-for 지시자와 props 를 사용방법에 대해서 학습한다.
 
         단순 배열을 바인딩하는 방법 학습
         array = [1,2,3,4,5];
@@ -45,6 +45,7 @@
         </p>
         <p>
             <b v-for="(val, i) in arr" v-bind:key="i">
+                {{val}}
                 <component-box v-bind:num="val"></component-box>
             </b>
         </p>
@@ -58,36 +59,67 @@
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
 <script>
-    var componentBox = {
-        props: ['num'],
+    var ComponentBox = {
+        /* pdtmc^2w */
+        props: ["num"] ,
         data: function() {
             return {
-
-            };
+                spanstyle : {
+                    display:"inline-block",
+                    fontSize:"3em",
+                    border:"1px dashed blue",
+                    padding:"10px 20px",
+                    margin:"5px",
+                    textAlign:"center",
+                }
+            }
         },
         template: `
-        <span style="display:inline-block; font-size:3em; border:1px dashed blue; padding:10px 20px; margin:5px; text-align:center;">
+        <span v-bind:style="spanstyle">
             {{num}}
         </span>
-        `
+        `,
+        methods: {
+
+        },
+        components: {
+            /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+
+        },
+        computed: {
+            /* 자동처리 + 동기식. 메서드로 작성. return 필수. */
+
+        },
+        watch: {
+            /* 자동처리 + 비동기식. data 에 등록된 프로퍼티 모니터링. 메서드로 작성. 매개변수 입력 필수  */
+
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
     };
+
 
     new Vue({
         /* edtmc^2w */
         el: "#app",
         data: {
-            arr: [1,2,3,4,5,6,7,8,9,10],
+            arr: [0,1,2,3,4,5,6,7,8,9,10],
         },
         //template: ``,
         methods: {
-            clickAddBox: function(event) {
-                this.$set(this.$data.arr, this.$data.arr.length, this.$data.arr.length+1);
+            clickAddBox: function(event){
+                // this.$data.arr.push( this.$data.arr.length );
+                // this.$data.arr[this.$data.arr.length] = this.$data.arr.length;
+                this.$set( this.$data.arr, this.$data.arr.length, this.$data.arr.length );
             }
         },
-        components: {
-            /* 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
-            "component-box": componentBox,
-
+        components: {   
+            /* 지역 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+            "component-box": ComponentBox,
         },
         computed: {
 

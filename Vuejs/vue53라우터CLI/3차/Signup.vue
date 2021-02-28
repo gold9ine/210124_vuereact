@@ -1,3 +1,5 @@
+<style scoped></style>
+
 <template>
     <div class="signup">
         <h1>This is an signup page</h1>
@@ -6,20 +8,27 @@
 </template>
 
 <script>
-import UserRegister from "@/components/user/UserRegister.vue";
+import UserRegister from "../components/user/UserRegister";
+
 export default {
-    /* npdtmc^2w */
-    name: "Signup",
-    props: {},
-    data() {
+    /* pdtmc^2w */
+    props: [],
+    data: function() {
         return {};
     },
-    template: {},
+    //template: ``,
     methods: {},
-    computed: {},
     components: {
+        /* AA??????I???? ??i??I. ??????A) "AA??????i" : AA??????I????i */
         "user-register": UserRegister
     },
-    watch: {}
+    computed: {},
+    watch: {},
+    mounted: function() {
+        console.log("mounted");
+    },
+    updated: function() {
+        console.log("updated");
+    }
 };
 </script>

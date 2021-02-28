@@ -36,24 +36,35 @@
     <div id="app">
         {{ message }}
         <!-- 버튼 기능 추가-->
-        <button v-on:click="doMyName">버튼</button>
+
     </div>
+
+    <script type="text/x-template" id="template">
+    <div id="app">
+        {{ message }}
+        <!-- 버튼 기능 추가-->
+        <button v-on:click="btnclick">click</button>
+    </div>
+    </script>
+    
 </body>
 </html>
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
 <script>
-    new Vue({
+    var vm = new Vue({
         /* edtmc^2w */
         el: "#app",
         data: {
-            message: "Hello, Vue.js",
+            message: "Hello, Vue.js!!!"
         },
-        //template: ``,
+        template: "#template",
         methods: {
-            doMyName: function(event){
-                //this.$data.message = "세중";
-                this.$set(this.$data, "message",  "세중");
+            btnclick: function(event){
+                console.log(event.target);
+                //this.$data.message = "name";
+
+                this.$set( this.$data, "message", "name");
             }
         },
         components: {
@@ -77,4 +88,6 @@
         },
     });
 
+    vm.$data.message = "abc";
+    
 </script>

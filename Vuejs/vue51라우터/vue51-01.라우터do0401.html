@@ -11,6 +11,10 @@
 
     <!-- CSS import -->
     <link rel="stylesheet" href="../css/reset.css">
+    <style>
+        .main { background-color: yellowgreen; height: 200px;}
+        .login { background-color: aquamarine; height: 200px;}
+    </style>
 
 </head>
 
@@ -49,3 +53,41 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vue-router@3.1.6/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
+<script>
+    // 컴포넌트 만들기: /main ==> component-main
+    // 컴포넌트 만들기: /login ==> component-login
+    // 뷰라우팅 정의
+    // 인스턴스 만들기:
+    var componentMain = {
+        template: `
+            <div class="main">
+                <p>main 컴포넌트</p>
+            </div>
+        `,
+    };
+    var componentLogin = {
+        template: `
+            <div class="login">
+                <p>login 컴포넌트</p>
+            </div>
+        `,
+    };
+
+    // Vue 라우팅 경로 정의
+    var router = new VueRouter({
+        routes  : [
+            { path: "/main", component: componentMain },
+            { path: "/login", component: componentLogin },
+        ]
+    });
+
+    // 뷰 라우터를 뷰 인스턴스에 등록
+    new Vue({
+        router
+    }).$mount("#app");
+
+</script>

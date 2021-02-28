@@ -41,11 +41,11 @@
 
 <body>
     <pre>
-	  Vue.js 에서 class 속성 적용 방식.
-	  1. 단일 class 적용. ex) class="active"
-	     ==> 문자열로 처리
-	  2. 다중 class 적용. ex) class="active done"
-	     ==> true / false 로 처리
+      Vue.js 에서 class 속성 적용 방식.
+      1. 단일 class 적용. ex) class="active"
+         ==> 문자열로 처리
+      2. 다중 class 적용. ex) class="active done"
+         ==> true / false 로 처리
 
 
 
@@ -76,21 +76,27 @@
         el: "#app",
         data: {
             state: "ready",
+            //msg: "ready",
         },
+        //template: ``,
         methods: {
             change: function(event){
                 console.log(event.target);
+
                 if( this.$data.state === "ready"){
                     //this.$data.state = "active";
                     this.$set( this.$data, "state", "active" );
+                    //this.$set(this.$data, "msg", "active");
                 }
                 else if( this.$data.state === "active"){
                     //this.$data.state = "done";
                     this.$set( this.$data, "state", "done" );
+                    //this.$set(this.$data, "msg", "done");
                 }
                 else if( this.$data.state === "done"){
                     //this.$data.state = "ready";
                     this.$set( this.$data, "state", "ready" );
+                    //this.$set(this.$data, "msg", "ready");
                 }
             },
         },
@@ -98,7 +104,7 @@
             msg: function(){
                 return this.$data.state;
             },
-        }
+        },
     });
 
 </script>

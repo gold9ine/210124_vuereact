@@ -43,7 +43,7 @@
             ==> 클릭된 a 태그의 href 속성값을 어떻게 얻을 수 있나?
                 var href = event.target.href;
 
-            ==> 클릭된 a 태그의 href 속성값에서 파일의 확장자를 어떻게 얻을 수 있나?
+            ==> 클릭된 a 태그의 href 속성값에서 파일의 확장자를 어떻게 얻을 수 있나 ?
                 // href 의 마지막 3개 글자 추출하기 : substr()
                 var ext = href.substr(-3); // href.substr(href.lenght-3, 3);
 
@@ -85,6 +85,27 @@
         <h1>Adding Icons to Links</h1>
         <p>Here's a list of downloadable files:</p>
         <ul class="icon-links">
+            <li><a href="presentation.ppt">Presentation slides</a></li>
+            <li><a href="video.mp4">Video of presentation</a></li>
+            <li><a href="notes.pdf">Notes for presentation</a></li>
+            <li><a href="icons.gif">GIF Icon sprite</a></li>
+            <li><a href="icons.png">PNG Icon sprite</a></li>
+            <li><a href="icons.jpg">PNG Icon sprite</a></li>
+            <li><a href="fuyyu.ppt">Presentation slides</a></li>
+            <li><a href="fyyuy.mp4">Video of presentation</a></li>
+            <li><a href="uydyuflk.pdf">Notes for presentation</a></li>
+            <li><a href="OIP.gif">GIF Icon sprite</a></li>
+            <li><a href="ID7890IO.png">PNG Icon sprite</a></li>
+            <li><a href="PFDY.jpg">PNG Icon sprite</a></li>
+        </ul>
+    </div>
+    <hr>
+
+    <script type="text/x-template" id="template">
+    <div>
+        <h1>Adding Icons to Links</h1>
+        <p>Here's a list of downloadable files:</p>
+        <ul class="icon-links">
             <li><a v-on:click="aClick" href="presentation.ppt">Presentation slides</a></li>
             <li><a v-on:click="aClick" href="video.mp4">Video of presentation</a></li>
             <li><a v-on:click="aClick" href="notes.pdf">Notes for presentation</a></li>
@@ -99,8 +120,7 @@
             <li><a v-on:click="aClick" href="PFDY.jpg">PNG Icon sprite</a></li>
         </ul>
     </div>
-    <hr>
-
+    </script>
 
 </body>
 
@@ -116,8 +136,14 @@
     new Vue({
         /* edtmc^2w */
         el: "#app",
+        data: {
+    
+        },
+        template: "#template",
         methods: {
             aClick: function(event){
+                console.log(event.target);
+                
                 // a 태그의 리다이렉트 이벤트 취소
                 event.preventDefault();
                 event.stopPropagation();
@@ -125,10 +151,11 @@
                 // 클릭된 a 태그의 href 속성값을 어떻게 얻을 수 있나?
                 var href = event.target.href;
 
-                // 클릭된 a 태그 href 의 마지막 3개 글자 어떻게 얻을 수 있나?
+                // 클릭된 a 태그의 href 속성값에서 파일의 확장자를 어떻게 얻을 수 있나 ?
                 // href 의 마지막 3개 글자 추출하기 : substr()
                 var ext = href.substr( href.length-3, 3);  // href.substr(-3);
 
+                // 클릭된 자기 자신, a 태그에만 class 적용.
                 // 파일의 확장자가 ppt 이면 a.presentation 적용
                 // 파일의 확장자가 mp4 이면 a.video 적용
                 // 파일의 확장자가 pdf 이면 a.pdf 적용
@@ -136,7 +163,12 @@
                 // 파일의 확장자가 png 이면 a.image 적용
                 // 파일의 확장자가 jpg 이면 a.image 적용
                 if( ext === "ppt") {
-                    event.target.className = "presentation";
+                    if( event.target.className === "presentation" ) {
+                        event.target.className = "";
+                    }
+                    else {
+                        event.target.className = "presentation";
+                    }
                 }
                 else if( ext === "mp4") {
                     event.target.className = "video";

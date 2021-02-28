@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>서버의 데이터를 대상 엘리먼트에 삽입하기</title>
+    <title>node 서버 실행과 동작 테스트</title>
 
     <style>
         #app>div {
@@ -65,31 +65,77 @@
         <h2>서버 response 형태 확인하기[ text / html / json / xml]</h2>
         <ul>
             <li>
-                <a href="http://localhost:5050/text" target="_blank">http://localhost:5050/text</a>
+                text: <a href="http://localhost:5050/text" target="_blank">http://localhost:5050/text</a>
             </li>
             <li>
-                <a href="http://localhost:5050/html" target="_blank">http://localhost:5050/html</a>
+                html: <a href="http://localhost:5050/html" target="_blank">http://localhost:5050/html</a>
             </li>
             <li>
-                <a href="http://localhost:5050/json" target="_blank">http://localhost:5050/json</a>
+                json: <a href="http://localhost:5050/json" target="_blank">http://localhost:5050/json</a>
             </li>
             <li>
-                <a href="http://localhost:5050/xml" target="_blank">http://localhost:5050/xml</a>
+                xml: <a href="http://localhost:5050/xml" target="_blank">http://localhost:5050/xml</a>
+            </li>
+        </ul>
+
+        <h2>counter</h2>
+        <ul>
+            <li>
+                카운트 1 씩 증가: <a href="http://localhost:5050/counter" target="_blank">http://localhost:5050/counter</a>
             </li>
             <li>
-                <a href="http://localhost:5050/counter?step=5" target="_blank">http://localhost:5050/counter?step=5</a>
+                카운트 5 씩 증가: <a href="http://localhost:5050/counter?step=5" target="_blank">http://localhost:5050/counter?step=5</a>
             </li>
             <li>
-                <a href="http://localhost:5050/getnextdata?name=friends" target="_blank">http://localhost:5050/getnextdata?name=friends</a>
+                카운트 10 씩 증가: <a href="http://localhost:5050/counter?step=10" target="_blank">http://localhost:5050/counter?step=10</a>
+            </li>
+        </ul>
+
+        <h2>todo </h2>
+        <ul>
+            <li>
+                Read: <a href="http://localhost:5050/todo/get" target="_blank">http://localhost:5050/todo/get</a>
             </li>
             <li>
-                <a href="http://localhost:5050/getnextdata?name=timelines" target="_blank">http://localhost:5050/getnextdata?name=timelines</a>
+                Create: <a href="http://localhost:5050/todo/add?todo=aaa&done=false" target="_blank">http://localhost:5050/todo/add?todo=aaa&done=false</a>
             </li>
             <li>
-                <a href="http://localhost:5050/counter" target="_blank">http://localhost:5050/counter ==> 1 씩 증가</a>
+                Update: <a href="http://localhost:5050/todo/donetoggle?id=2&index=1" target="_blank">http://localhost:5050/todo/donetoggle?id=2&index=1</a>
             </li>
             <li>
-                <a href="http://localhost:5050/counter?step=10" target="_blank">http://localhost:5050/counter?step=10 ==> 10 씩 증가</a>
+                Delete One: <a href="http://localhost:5050/todo/remove?id=2&index=1" target="_blank">http://localhost:5050/todo/remove?id=2&index=1</a>
+            </li>
+            <li>
+                Delete all: <a href="http://localhost:5050/todo/clearall" target="_blank">http://localhost:5050/todo/clearall</a>
+            </li>
+        </ul>
+
+        <h2>login </h2>
+        <ul>
+            <li>
+                user list : <a href="http://localhost:5050/user/all" target="_blank">http://localhost:5050/user/all</a>
+            </li>
+            <li>
+                login: <a href="http://localhost:5050/user/login?uid=uid01&pwd=pwd01" target="_blank">http://localhost:5050/user/login?uid=uid01&pwd=pwd01</a>
+            </li>
+            <li>
+                logout: <a href="http://localhost:5050/user/logout?uid=uid01" target="_blank">http://localhost:5050/user/logout?uid=uid01</a>
+            </li>
+            <li>
+                register: <a href="http://localhost:5050/user/register?uid=uid03&pwd=pwd03&name=홍길동&email=email@mail.com" target="_blank">http://localhost:5050/user/register?uid=uid03&pwd=pwd03&name=홍길동&email=email@mail.com</a>
+            </li>
+            <li>
+                unregister: <a href="http://localhost:5050/user/unregister?uid=uid01" target="_blank">http://localhost:5050/user/unregister?uid=uid01</a>
+            </li>
+        </ul>
+
+        <h2>getnextdata[friends,timelines]</h2>
+        <ul>
+            <li>
+                friends: <a href="http://localhost:5050/getnextdata?name=friends" target="_blank">http://localhost:5050/getnextdata?name=friends</a>
+            </li>
+            <li>
+                timelines: <a href="http://localhost:5050/getnextdata?name=timelines" target="_blank">http://localhost:5050/getnextdata?name=timelines</a>
             </li>
         </ul>
     </div>

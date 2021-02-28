@@ -21,17 +21,13 @@ button {
         <TodoHeader></TodoHeader>
 
         <!-- TodoInput -->
-        <TodoInput v-on:addTodo="addTodo"></TodoInput>
+        <TodoInput></TodoInput>
 
         <!-- TodoList -->
-        <TodoList
-            v-bind:todoItems="todoItems"
-            v-on:doneToggle="doneToggle"
-            v-on:removeTodo="removeTodo"
-        ></TodoList>
+        <TodoList></TodoList>
 
         <!-- TodoFooter -->
-        <TodoFooter v-on:clearAll="clearAll"></TodoFooter>
+        <TodoFooter></TodoFooter>
     </div>
 </template>
 

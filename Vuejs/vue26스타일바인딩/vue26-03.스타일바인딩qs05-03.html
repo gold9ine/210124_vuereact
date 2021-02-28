@@ -144,6 +144,7 @@
         data: {
             style1: {},
         },
+        //template: ``,
         methods: {
             clickArrow: function(event){
                 console.log(event.target);
@@ -165,17 +166,19 @@
                this.$data.style1.border = "1px solid black";
 
                // 방법2
-               this.$data.style1 = {
+               var obj = {
                     height: "50px",
                     width: "150px",
                     border: "1px solid black",
-                    textClign: "center",
+                    textAlign: "center",
                     lineHeight: "50px",
                     fontWeight: "800",
                     color: "red",
                     backgroundColor: "darkgoldenrod",
                     padding: "50px",
-               };
+               }
+               //this.$data.style1 = obj;
+               this.$set( this.$data, "style1", obj);
             }
         },
     });
@@ -186,30 +189,35 @@
         data: {
             style1: {},
         },
+        //template: ``,
         methods: {
             overEvent: function(event){
                 console.log(event.target);
                 /*
-                배경색을 purple 로 글자색은 yellow ;
+                버튼 위로 mouseover 되면 배경색은 purple 로 글자색은 yellow 로 바꾸도록 style 을 설정하시오.
                 background-color: purple;
                 color:  yellow;
                 */
-                this.$data.style1 = {
+                var obj = {
                     backgroundColor: "purple",
                     color: "yellow",
                 }
+                //this.$data.style1 = obj;
+                this.$set( this.$data, "style1", obj);
             },
             outEvent: function(event){
                 console.log(event.target);
                 /*
-                배경색을 aqua 로 글자색은 black ;
+                버튼 위에서 mouseout 되면 배경색을 aqua 로 글자색은 black 으로 바꾸도록 style 을 설정하시오.
                 background-color: aqua;
                 color:  black;
                 */
-                this.$data.style1 = {
+                var obj = {
                     backgroundColor: "aqua",
                     color: "black",
                 }
+                //this.$data.style1 = obj;
+                this.$set(this.$data, "style1", obj); 
             },
         },
     });

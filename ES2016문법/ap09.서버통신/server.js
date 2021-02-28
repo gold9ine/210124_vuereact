@@ -23,16 +23,18 @@ var usersList = [
     {
         'uid': "uid01",
         'pwd': "pwd01",
-        'username': "홍길동",
-        'email'   : 'email@mail.com',
-        'password': randomString(10, 'a075d17f3d453073853f813838c15c3942e1f95')
+        'name': "홍길동",
+        'email': 'email@mail.com',
+        'token': null /* randomString(10, 'a075d17f3d453073853f813838c15c3942e1f95') */,
+        'isLogin': false,
     },
     {
         'uid': "uid02",
         'pwd': "pwd02",
-        'username': randomString(5, 'afxfdfyrs'),
-        'email'   : 'email@mail.com',
-        'password': randomString(10, 'a075d17f3d453073853f813838c15c3942e1f95')
+        'name': "강남길",
+        'email'   : 'email@naver.com',
+        'token': null /* randomString(10, 'a075d17f3d453073853f813838c15c3942e1f95') */,
+        'isLogin': false,
     },
 
 ];
@@ -44,8 +46,14 @@ dataXml += '    <ListOfLN_Interface>                ';
 dataXml += '        <Contact>123304</Contact>       ';
 dataXml += '    </ListOfLN_Interface>               ';
 dataXml += '</REST>                                 ';
+
+
 function QueryStringToJSON(qs) {
-    var pairs = qs.slice(1).split('&');
+    var arr = qs.split('?');
+
+    if( arr.length <= 1 ) return null;
+
+    var pairs = arr[1].split('&');
 
     var result = {};
     pairs.forEach(function(pair) {
@@ -54,6 +62,16 @@ function QueryStringToJSON(qs) {
     });
 
     return JSON.parse(JSON.stringify(result));
+}
+
+function QueryJsonToObject(query) {
+
+    var obj = null
+    if( query["0"] ){
+        obj = JSON.parse( query["0"] );
+    }
+
+    return obj
 }
 
 // http://stackoverflow.com/questions/4295782/how-do-you-extract-post-data-in-node-js
@@ -128,15 +146,115 @@ function randomString(len, charSet) {
  */
 function createStore(state = {}) {
     return {
-        counter : function(inc) {
+        counter(inc) {
             return state.counter += Number(inc);
         },
+        todoGet(){
+            return state.todoItems;
+        },
+        todoAdd(newTodo){
+
+            /* max 를 id 를 찾는방법
+                1. array.reduce() 사용
+                2. array.map()과 Math.max()를 사용하는 방법
+            */
+
+            // 1. array.reduce() 를 사용하여 newId를 구하는 방법
+            var maxObj = null;
+            if (state.todoItems.length === 0) {
+                maxObj = {
+                    id: 0,
+                    todo: "",
+                    done: false
+                };
+            } else {
+                maxObj = state.todoItems.reduce(function (
+                    prevItem,
+                    nextItem
+                ) {
+                    // 최대 id 값을 갖고있는 item을 찾는다.
+                    return prevItem.id > nextItem.id ? prevItem : nextItem; //
+                });
+            }
+            console.log(maxObj);
+
+            var newid = maxObj.id + 1;
+
+            /*
+                state.todoItems[state.todoItems.length] = {
+                    id: newid
+                    todo: state.newTodoItem,
+                    done: false,
+                };
+            */
+            state.todoItems.push( Object.assign({ id: newid },newTodo ) );
+
+            return state.todoItems;
+        },
+        todoDoneToggle: function (id, paramIndex) {
+            // update
+            // object array 에서 찾는 방법
+            // 1. array.findIndex()을 사용하여 paramIndex 찾기
+            var searchIndex = state.todoItems.findIndex( function(item){
+                //return item.id === id;
+                if( item.id === id ){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            const finalIndex=  searchIndex >=0 ? searchIndex: paramIndex;
+
+            if ( finalIndex >= 0) {
+                state.todoItems[finalIndex].done = !state.todoItems[finalIndex].done;
+            }
+
+            return state.todoItems;
+        },
+        todoRemove: function (id, paramIndex) {
+            // delete: ;
+            // 참조 타입 변수이면 재할당(=== 깊은 복사) 필요.
+            // 방법1: array.splice() 을 사용하는 방법
+            // 방법2: array.map() 을 사용하는 방법
+
+            // object array 에서 찾는 방법
+            // 1. array.findIndex()을 사용하여 paramIndex 찾기
+            var searchIndex = state.todoItems.findIndex( function(item){
+                //return item.id === id;
+                if( item.id === id ){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            const finalIndex =  searchIndex >=0 ? searchIndex: paramIndex;
+
+            if ( finalIndex >= 0) {
+                state.todoItems.splice( finalIndex, 1);
+            }
+
+            return state.todoItems;
+        },
+        todoClearAll: function () {
+            state.todoItems = [];
+
+            return state.todoItems;
+        }
     };
 }
 
 var store = createStore({
     counter: 0,
-    todoItems: [],
+    todoItems: [
+        { id: 1, todo: "영화보기", done: false },
+        { id: 2, todo: "주말 산책", done: true },
+        { id: 3, todo: "ES6 학습", done: false },
+        { id: 4, todo: "잠실 야구장", done: false }
+    ],
 });
 
 /**
@@ -290,53 +408,153 @@ http.createServer( function(req, res) {
         });
     }
 
-    if( urlpath === '/login' /* && req.method.toUpperCase() === 'POST' */ ) {
+    // 호출 : http://localhost:5050/user/all
+    if( urlpath === '/user/all' /* && req.method.toUpperCase() === 'POST' */ ) {
+        console.log( 'all ...');
 
-        console.log( ' login ...');
+        getParams(req, res, function(data){
+            console.log( data );
 
-        var loginInfo = QueryStringToJSON(req.url);
-
-        // DB에서 로그인 검증 처리
-        var user = usersList.filter(function (el) {
-            return el.uid === this.userid && el.pwd === this.password;
-        }, loginInfo);
-
-        var resContent = user.length === 0 ? "" : JSON.stringify(user[0]);
-        res.writeHead(200, {
-            'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
-            'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
-            'Content-Type': 'application/json charset=utf-8',
-            'Content-Length': Buffer.byteLength(jsoresContentnLogout)
+            var resContent = usersList.length === 0 ? "" : JSON.stringify(usersList);
+            res.writeHead(200, {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json charset=utf-8',
+                'Content-Length': Buffer.byteLength(resContent)
+            });
+            res.write( resContent );
+            res.end();
         });
-        res.write( resContent );
-        res.end();
+    }
+
+    // 호출 : http://localhost:5050/user/login?uid=uid01&pwd=pwd01
+    if( urlpath === '/user/login' /* && req.method.toUpperCase() === 'POST' */ ) {
+        console.log( 'login ...');
+
+        getParams(req, res, function(data){
+            console.log( data );
+
+            // DB에서 로그인 검증 처리
+            var user = usersList.filter(function (el) {
+                if( el.uid === this.uid && el.pwd === this.pwd ) {
+                    return true;
+                }
+                return false;
+            }, data.query)
+            .map( function(el){
+                if( el.uid === this.uid && el.pwd === this.pwd ) {
+                    el.token = randomString(10, 'a075d17f3d453073853f813838c15c3942e1f95');
+                    el.isLogin = true;
+                }
+                return el;
+
+            }, data.query);
+
+            var resContent = user.length === 0 ? "" : JSON.stringify(user[0]);
+            res.writeHead(200, {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json charset=utf-8',
+                'Content-Length': Buffer.byteLength(resContent)
+            });
+            res.write( resContent );
+            res.end();
+        });
+    }
+
+    // 호출 : http://localhost:5050/user/logout?uid=uid01
+    if( urlpath === '/user/logout' /* && req.method.toUpperCase() === 'POST' */ ) {
+        console.log( 'logout ...');
+
+        getParams(req, res, function(data){
+            console.log( data );
+
+            // DB에서 로그아웃 검증 처리
+            var user = usersList.map(function (el) {
+                if( el.uid === this.uid ) {
+                    el.token = null /* randomString(10, 'a075d17f3d453073853f813838c15c3942e1f95') */;
+                    el.isLogin = false;
+                }
+                return el;
+            }, data.query);
+
+            var resContent = user.length === 0 ? "" : JSON.stringify(user[0]);
+
+            res.writeHead(200, {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json charset=utf-8',
+                'Content-Length': Buffer.byteLength(resContent)
+            });
+            res.write(resContent);
+            res.end();
+        });
+    }
+
+    // 호출 : http://localhost:5050/user/register?uid=uid01&pwd=pwd01&name=홍길동&email=email@mail.com
+    if( urlpath === '/user/register' /* && req.method.toUpperCase() === 'POST' */ ) {
+        console.log( 'register ...');
+
+        getParams(req, res, function(data){
+            console.log( data );
+
+            // DB에 insert처리
+            usersList.push(data.query);
+
+            var resContent = JSON.stringify( usersList[usersList.length-1] );
+
+            res.writeHead(200, {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json charset=utf-8',
+                'Content-Length': Buffer.byteLength(resContent)
+            });
+            res.write(resContent);
+            res.end();
+        });
     }
 
 
-    if( urlpath === '/logout' /* && req.method.toUpperCase() === 'POST' */ ) {
+    // 호출 : http://localhost:5050/user/unregister?uid=uid01
+    if( urlpath === '/user/unregister' /* && req.method.toUpperCase() === 'POST' */ ) {
+        console.log( 'unregister ...');
 
-        console.log( ' logout ...');
+        getParams(req, res, function(data){
+            console.log( data );
 
-        // DB에서 로그아웃 검증 처리
+            // DB에 insert처리
+            var searchIndex = usersList.findIndex( function(item){
+                //return item.id !== this.uid ;
+                if( item.uid === this.uid ){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }, data.query);
+            usersList.splice(searchIndex, 1);
 
+            var resContent = JSON.stringify(  {mesg: "unregister success"} );
 
-        res.writeHead(200, {
-            'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
-            'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
-            'Content-Type': 'application/json charset=utf-8',
-            'Content-Length': Buffer.byteLength(jsonLogout)
+            res.writeHead(200, {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json charset=utf-8',
+                'Content-Length': Buffer.byteLength(resContent)
+            });
+            res.write(resContent);
+            res.end();
         });
-        res.write(jsonLogout);
-        res.end();
     }
-
 
 
     // 호출 : http://localhost:5050/board?start=10&end=20
     if( urlpath === '/board' && req.method.toUpperCase() === 'GET'  ) {
-        var html = '';
 
         getParams(req, res, function(data){
             console.log( data );
@@ -369,7 +587,6 @@ http.createServer( function(req, res) {
 
 
     if( urlpath === '/welcome' && req.method.toUpperCase() === 'POST'  ) {
-        var html = '';
 
         getParams(req, res, function(data){
             console.log( data );
@@ -381,7 +598,7 @@ http.createServer( function(req, res) {
                 'Content-Type': 'text/plain',
                 'Content-Length': Buffer.byteLength(data)
             });
-            res.write(data.username);
+            res.write(data.name);
             res.end();
 
         });
@@ -390,7 +607,6 @@ http.createServer( function(req, res) {
 
     // 호출 : http://localhost:5050/counter?step=10
     if( urlpath === '/counter' && req.method.toUpperCase() === 'GET'  ) {
-        var html = '';
 
         getParams(req, res, function(data){
             console.log( data );
@@ -413,10 +629,140 @@ http.createServer( function(req, res) {
         });
     }
 
+
+    // 호출 : http://localhost:5050/todo/get
+    if( urlpath === '/todo/get' && req.method.toUpperCase() === 'GET'  ) {
+
+        getParams(req, res, function(data){
+            console.log( data );
+
+            var todos = store.todoGet();
+            var txt = JSON.stringify( todos );
+
+            res.writeHead(200, "OK", {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json, charset=utf-8',
+                'Content-Length': Buffer.byteLength( txt )
+            });
+            res.write( txt );
+            res.end();
+        });
+    }
+
+
+    // 호출 : http://localhost:5050/todo/add?todo=aaa&done=false
+    if( urlpath === '/todo/add' && req.method.toUpperCase() === 'GET'  ) {
+
+        getParams(req, res, function(data){
+            console.log( data );
+
+            var obj = QueryJsonToObject(data.query);
+            if( !obj ){
+                obj = {
+                    todo: data.query["todo"],
+                    done: false,
+                }
+            }
+
+            var todos = store.todoAdd(obj);
+            var txt = JSON.stringify( todos );
+
+            res.writeHead(200, "OK", {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json, charset=utf-8',
+                'Content-Length': Buffer.byteLength( txt )
+            });
+            res.write( txt );
+            res.end();
+        });
+    }
+
+    // 호출 : http://localhost:5050/todo/donetoggle?id=1&index=1
+    if( urlpath === '/todo/donetoggle' && req.method.toUpperCase() === 'GET'  ) {
+
+        getParams(req, res, function(data){
+            console.log( data );
+
+            var obj = QueryJsonToObject(data.query);
+            if( !obj ){
+                obj = {
+                    id: Number(data.query["id"]),
+                    index: Number(data.query["index"]),
+                }
+            }
+
+            var todos = store.todoDoneToggle(obj.id, obj.index);
+            var txt = JSON.stringify( todos );
+
+            res.writeHead(200, "OK", {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json, charset=utf-8',
+                'Content-Length': Buffer.byteLength( txt )
+            });
+            res.write( txt );
+            res.end();
+        });
+    }
+
+    // 호출 : http://localhost:5050/todo/remove?id=1&index=1
+    if( urlpath === '/todo/remove' && req.method.toUpperCase() === 'GET'  ) {
+
+        getParams(req, res, function(data){
+            console.log( data );
+
+            var obj = QueryJsonToObject(data.query);
+            if( !obj ){
+                obj = {
+                    id: Number(data.query["id"]),
+                    index: Number(data.query["index"]),
+                }
+            }
+
+            var todos = store.todoRemove(obj.id, obj.index);
+            var txt = JSON.stringify( todos );
+
+            res.writeHead(200, "OK", {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json, charset=utf-8',
+                'Content-Length': Buffer.byteLength( txt )
+            });
+            res.write( txt );
+            res.end();
+        });
+    }
+
+    // 호출 : http://localhost:5050/todo/clearall
+    if( urlpath === '/todo/clearall' && req.method.toUpperCase() === 'GET'  ) {
+
+        getParams(req, res, function(data){
+            console.log( data );
+
+            var todos = store.todoClearAll();
+            var txt = JSON.stringify( todos );
+
+            res.writeHead(200, "OK", {
+                'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+                'Content-Type': 'application/json, charset=utf-8',
+                'Content-Length': Buffer.byteLength( txt )
+            });
+            res.write( txt );
+            res.end();
+        });
+    }
+
     // 호출 : http://localhost:5050/getnextdata?name=friends
     // 호출 : http://localhost:5050/getnextdata?name=timelines
     if( urlpath === '/getnextdata' && req.method.toUpperCase() === 'GET'  ) {
-        var html = '';
 
         getParams(req, res, function(data){
             console.log( data );

@@ -15,11 +15,9 @@
 
 <body>
     <xmp>
-        콧수염 표현식, {{ }} 에서는 
-        첫째, 콧수염 표현식 에서는 자바스크립트를 사용할 수 있다.
-        둘째, 콧수염 표현식 에서는 변수 선언문과 분기문은 사용 할 수 없다.
-        세째, 콧수염 표현식 에서는 삼항 연산자는 사용 가능하다.
-        네째, 복잡한 연산은 computed 속성에서 처리하고 화면에서는 결과만 표시하게 작성한다.
+        콧수염 표현식, {{ }} 에서는 
+        콧수염 표현식 에서는 자바스크립트 코드 사용이 가능하나 사용하지 말자.
+        대신 computed 프러터티를 사용하여 처리하도록 작성한다.
 
         Vue 작성 원칙은 뷰, 데이터, 로직의 분리
 
@@ -69,7 +67,7 @@
 
         <div>
             콧수염 표현식 안에서 자바스크립트 사용 가능하지만 <br>
-            가능한 연산은 인스턴스 속성에서 처리하는 것이 좋다.<br>
+            가능한 연산은 인스턴스 속성로 처리하는 것이 좋다.<br>
             <br>
             {{ message.split('').reverse().join('') }}
         </div>
@@ -87,3 +85,21 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+       el: "#app" ,
+       data: {
+           awesome: true, // ture / false 설정
+           message: "Hello, Vue.js",
+       },
+       computed: {
+            reversedMessage : function() {
+                return this.$data.message.split(" ").reverse().join(" ");
+            },
+       },
+    });
+
+</script>
